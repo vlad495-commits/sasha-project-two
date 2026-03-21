@@ -52,6 +52,9 @@ button { border: none; cursor: pointer; font-family: inherit; }
 .label--light { color: rgba(240,230,208,.7); }
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
 .reveal.visible { opacity: 1; transform: none; }
+/* Clip-path reveal для заголовков */
+.reveal-title { opacity: 0; transform: translateY(40px); transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1); }
+.reveal-title.visible { opacity: 1; transform: translateY(0); }
 
 /* ─── BUTTONS ──────────────────────────────────────────────────── */
 .btn {
@@ -64,6 +67,119 @@ button { border: none; cursor: pointer; font-family: inherit; }
 .btn:hover { transform: scale(1.04); }
 .btn-primary { background: var(--terra); color: var(--beige); }
 .btn-primary:hover { background: var(--terra-dark); box-shadow: 0 6px 24px rgba(196,98,45,.35); }
+
+/* ─── RUNNING BORDER — кнопка бронирования ────────────────────── */
+@property --ba {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.btn-book-anim {
+  position: relative;
+  z-index: 0;
+  background: var(--terra) !important;
+  color: var(--beige) !important;
+}
+.btn-book-anim::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 100px;
+  background: conic-gradient(from var(--ba), #C4622D 0%, #F0E6D0 30%, #6B7F5A 55%, #F0E6D0 80%, #C4622D 100%);
+  z-index: -1;
+  --ba: 0deg;
+  animation: ba-spin 4s linear infinite;
+}
+@keyframes ba-spin { to { --ba: 360deg; } }
+
+/* ─── WOW: SCROLL PROGRESS BAR ─────────────────────────────────── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; z-index: 200; pointer-events: none;
+  height: 2px; width: 0%;
+  background: linear-gradient(90deg, var(--terra), #E8A070, var(--beige-warm));
+  transition: width .08s linear;
+}
+
+/* ─── WOW: HERO AMBIENT GLOW ────────────────────────────────────── */
+.hero-ambient {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 75% 60%, rgba(196,98,45,.22) 0%, transparent 52%),
+    radial-gradient(ellipse at 18% 35%, rgba(107,127,90,.14) 0%, transparent 48%);
+  animation: ambientDrift 14s ease-in-out infinite alternate;
+}
+@keyframes ambientDrift {
+  from { opacity: .45; transform: scale(1); }
+  to   { opacity: 1;   transform: scale(1.07) translate(-1%, .5%); }
+}
+.hero-grain {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: .045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat; background-size: 300px;
+}
+
+/* ─── WOW: CUSTOM CURSOR (DESKTOP) ─────────────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  .cursor-dot {
+    position: fixed; z-index: 9999; pointer-events: none;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--terra);
+    transform: translate(-50%, -50%);
+    transition: width .18s ease, height .18s ease, background .18s ease, opacity .2s ease;
+    will-change: left, top;
+  }
+  .cursor-ring {
+    position: fixed; z-index: 9998; pointer-events: none;
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1.5px solid rgba(196,98,45,.4);
+    transform: translate(-50%, -50%);
+    transition: width .22s ease, height .22s ease, border-color .22s ease, opacity .2s ease;
+    will-change: left, top;
+  }
+  .cursor-dot.hover  { width: 13px; height: 13px; background: rgba(196,98,45,.45); }
+  .cursor-ring.hover { width: 46px; height: 46px; border-color: rgba(196,98,45,.28); }
+}
+
+/* ─── WOW: NAV LINK UNDERLINE ───────────────────────────────────── */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0;
+  width: 0; height: 1px; background: var(--terra);
+  transition: width .28s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+
+/* ─── WOW: ICON HOVER ───────────────────────────────────────────── */
+.feat-icon, .phil-icon, .amenity-icon, .contact-icon {
+  transition: transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .28s ease;
+}
+.features-list li:hover .feat-icon  { transform: scale(1.14) rotate(-6deg); box-shadow: 0 8px 20px rgba(0,0,0,.18); }
+.phil-item:hover .phil-icon         { transform: scale(1.1);                box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+.contact-item:hover .contact-icon   { transform: scale(1.08);               box-shadow: 0 6px 18px rgba(0,0,0,.15); }
+
+/* ─── WOW: MENU CARD GLINT ──────────────────────────────────────── */
+.menu-card { transform-style: preserve-3d; overflow: hidden; position: relative; }
+.menu-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(255,255,255,.09) 0%, transparent 55%);
+  opacity: 0; pointer-events: none; transition: opacity .3s ease;
+}
+.menu-card:hover::after { opacity: 1; }
+
+/* ─── WOW: REVEAL VARIANTS ──────────────────────────────────────── */
+.reveal-left  { opacity: 0; transform: translateX(-36px); transition: opacity .65s ease, transform .65s cubic-bezier(.16,1,.3,1); }
+.reveal-right { opacity: 0; transform: translateX(36px);  transition: opacity .65s ease, transform .65s cubic-bezier(.16,1,.3,1); }
+.reveal-left.visible, .reveal-right.visible { opacity: 1; transform: none; }
+
+/* ─── WOW: PROMO CARD HOVER BORDER ─────────────────────────────── */
+.promo-card { position: relative; overflow: hidden; }
+.promo-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(196,98,45,.12) 0%, transparent 60%);
+  opacity: 0; transition: opacity .35s ease; pointer-events: none;
+}
+.promo-card:hover::before { opacity: 1; }
+
 .btn-outline-light {
   background: transparent; color: var(--beige);
   border: 2px solid rgba(240,230,208,.5);
@@ -111,7 +227,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
 }
 .hamburger span {
   display: block; width: 24px; height: 2px;
-  background: var(--beige); transition: transform .3s, opacity .3s;
+  background: var(--beige); transition: transform .38s cubic-bezier(.34,1.56,.64,1), opacity .22s ease;
   border-radius: 2px;
 }
 .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -494,6 +610,48 @@ button { border: none; cursor: pointer; font-family: inherit; }
 }
 .gallery-instagram { color: rgba(240,230,208,.55); font-size: .9rem; }
 
+/* ─── INSTAGRAM BADGE ───────────────────────────────────────────── */
+.ig-badge {
+  display: inline-flex; align-items: center; gap: .7rem;
+  padding: .75rem 1.75rem;
+  border-radius: 100px;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--green), var(--green)) padding-box,
+    linear-gradient(135deg, var(--terra) 0%, var(--beige-warm) 55%, #6B7F5A 100%) border-box;
+  color: var(--beige);
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .9rem;
+  letter-spacing: .03em;
+  transition: transform .3s ease, box-shadow .3s ease;
+  position: relative;
+}
+.ig-badge:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(196,98,45,.28);
+}
+.ig-badge::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 100px;
+  background: radial-gradient(ellipse at 30% 50%, rgba(196,98,45,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ig-badge svg { opacity: .9; flex-shrink: 0; }
+.ig-label { color: rgba(240,230,208,.55); font-size: .85rem; }
+.ig-handle {
+  font-family: 'DM Mono', monospace;
+  color: var(--terra);
+  font-size: .95rem;
+  letter-spacing: .01em;
+}
+.ig-sep {
+  width: 1px; height: 14px;
+  background: rgba(240,230,208,.2);
+  flex-shrink: 0;
+}
+
 /* ─── REVIEWS ───────────────────────────────────────────────────── */
 .reviews {
   padding: var(--pad-section) 0;
@@ -840,7 +998,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
     </h1>
     <p class="hero-sub">Кофе с собой — это быстро.<br>Приходи посидеть!</p>
     <div class="hero-cta-wrap">
-      <a href="#booking" class="btn btn-primary">Хочу посидеть! →</a>
+      <a href="#booking" class="btn btn-primary btn-book-anim">Хочу посидеть! →</a>
       <div class="hero-proof">
         <span class="hero-stars">★★★★★</span>
         <span>4.9 · Google · Пн–Вс 8:00–22:00</span>
@@ -860,30 +1018,30 @@ button { border: none; cursor: pointer; font-family: inherit; }
     <span class="trust-sep">·</span>
     <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> 4.9 на Google · 340+ отзывов</span>
     <span class="trust-sep">·</span>
-    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v5M14 2v5M7 7h10v5a5 5 0 0 1-10 0V7zM12 17v3"/></svg></span> Розетки у каждого столика</span>
+    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2L8 12L14 12L10 22"/></svg></span> Розетки у каждого столика</span>
     <span class="trust-sep">·</span>
-    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.42 9a16 16 0 0 1 21.16 0M5 12.55a11 11 0 0 1 14.08 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg></span> Быстрый Wi-Fi — бесплатно</span>
+    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5a10.5 10.5 0 0 1 15 0M7.5 13.5a7 7 0 0 1 9 0M10.5 16.5a3 3 0 0 1 3 0M12 20v.5"/></svg></span> Быстрый Wi-Fi — бесплатно</span>
     <span class="trust-sep">·</span>
-    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5zM8.5 8.5h.01M12 12h.01M15.5 15.5h.01"/></svg></span> Настольные игры</span>
+    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L3 12L12 21L21 12L12 3z"/></svg></span> Настольные игры</span>
     <span class="trust-sep">·</span>
     <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12 C14 10 16 10 16 12 C16 15 13 17 12 17 C9 17 7 15 7 12 C7 8 10 5 14 5 C19 5 21 9 21 12 C21 17 17 21 12 21 C7 21 3 17 3 12"/></svg></span> Своя мини-пекарня</span>
     <span class="trust-sep">·</span>
-    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-12 12H4v-5L16 3z"/></svg></span> Детский уголок</span>
+    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a6 6 0 1 0 .01 0M12 14v5M11 19l1 1.5 1-1.5"/></svg></span> Детский уголок</span>
     <span class="trust-sep">·</span>
     <!-- дубль -->
     <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4c0 1-1 1.5-1 2.5M12 4c0 1-1 1.5-1 2.5M5 7h14v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V7zM19 7h1a2 2 0 1 1 0 4h-1"/></svg></span> Работаем с 2022 года</span>
     <span class="trust-sep">·</span>
     <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span> 4.9 на Google · 340+ отзывов</span>
     <span class="trust-sep">·</span>
-    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v5M14 2v5M7 7h10v5a5 5 0 0 1-10 0V7zM12 17v3"/></svg></span> Розетки у каждого столика</span>
+    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2L8 12L14 12L10 22"/></svg></span> Розетки у каждого столика</span>
     <span class="trust-sep">·</span>
-    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.42 9a16 16 0 0 1 21.16 0M5 12.55a11 11 0 0 1 14.08 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg></span> Быстрый Wi-Fi — бесплатно</span>
+    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5a10.5 10.5 0 0 1 15 0M7.5 13.5a7 7 0 0 1 9 0M10.5 16.5a3 3 0 0 1 3 0M12 20v.5"/></svg></span> Быстрый Wi-Fi — бесплатно</span>
     <span class="trust-sep">·</span>
-    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5zM8.5 8.5h.01M12 12h.01M15.5 15.5h.01"/></svg></span> Настольные игры</span>
+    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L3 12L12 21L21 12L12 3z"/></svg></span> Настольные игры</span>
     <span class="trust-sep">·</span>
     <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12 C14 10 16 10 16 12 C16 15 13 17 12 17 C9 17 7 15 7 12 C7 8 10 5 14 5 C19 5 21 9 21 12 C21 17 17 21 12 21 C7 21 3 17 3 12"/></svg></span> Своя мини-пекарня</span>
     <span class="trust-sep">·</span>
-    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-12 12H4v-5L16 3z"/></svg></span> Детский уголок</span>
+    <span class="trust-item"><span class="icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a6 6 0 1 0 .01 0M12 14v5M11 19l1 1.5 1-1.5"/></svg></span> Детский уголок</span>
     <span class="trust-sep">·</span>
   </div>
 </div>
@@ -893,7 +1051,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
   <div class="container">
     <div class="atm-text">
       <span class="label reveal">Добро пожаловать в «Кофеин»</span>
-      <h2 class="atm-title reveal">Найди свой угол.<br>Останься надолго.</h2>
+      <h2 class="atm-title reveal reveal-title">Найди свой угол.<br>Останься надолго.</h2>
       <p class="atm-body reveal">
         Мы открыли «Кофеин», чтобы у района было место, куда хочется возвращаться.<br><br>
         Никаких ограничений по времени. Никаких косых взглядов, если ты просидел три часа над ноутбуком и взял только капучино.
@@ -901,22 +1059,22 @@ button { border: none; cursor: pointer; font-family: inherit; }
       <ul class="features-list">
         <li class="reveal">
           <span class="feat-icon sage">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.42 9a16 16 0 0 1 21.16 0M5 12.55a11 11 0 0 1 14.08 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5a10.5 10.5 0 0 1 15 0M7.5 13.5a7 7 0 0 1 9 0M10.5 16.5a3 3 0 0 1 3 0M12 20v.5"/></svg>
           </span> Быстрый Wi-Fi — бесплатно
         </li>
         <li class="reveal">
           <span class="feat-icon sand">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v5M14 2v5M7 7h10v5a5 5 0 0 1-10 0V7zM12 17v3"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2L8 12L14 12L10 22"/></svg>
           </span> Розетки у каждого столика
         </li>
         <li class="reveal">
           <span class="feat-icon sage">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5zM8.5 8.5h.01M12 12h.01M15.5 15.5h.01"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L3 12L12 21L21 12L12 3z"/></svg>
           </span> Настольные игры — бери с полки
         </li>
         <li class="reveal">
           <span class="feat-icon sand">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-12 12H4v-5L16 3z"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a6 6 0 1 0 .01 0M12 14v5M11 19l1 1.5 1-1.5"/></svg>
           </span> Детский уголок (карандаши, раскраски)
         </li>
         <li class="reveal">
@@ -954,7 +1112,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
   <div class="container">
     <div class="menu-header">
       <span class="label">То, чем мы гордимся</span>
-      <h2 class="menu-title reveal">ТОП-5 хитов</h2>
+      <h2 class="menu-title reveal reveal-title">ТОП-5 хитов</h2>
       <p class="menu-sub reveal">Всё готовится из свежих ингредиентов. Спроси баристу — расскажем про каждое блюдо.</p>
     </div>
     <div class="menu-grid">
@@ -1001,7 +1159,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
     </div>
     <div class="menu-footer">
       <a href="#contacts" class="btn btn-outline-light">Смотреть полное меню</a>
-      <p class="menu-callout"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:.35em"><path d="M12 22V14M12 14C9 14 5 10 8 5M12 14C15 14 19 10 16 5"/></svg>Сезонные новинки — спроси баристу</p>
+      <p class="menu-callout"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:.35em"><path d="M12 3l1.8 5.5H20l-5 3.6 1.9 5.9L12 15l-4.9 3 1.9-5.9L4 8.5h6.2L12 3z"/></svg>Сезонные новинки — спроси баристу</p>
     </div>
   </div>
 </section>
@@ -1011,7 +1169,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
   <div class="container">
     <div class="promos-header">
       <span class="label">Для наших гостей</span>
-      <h2 class="section-title reveal">Акции, которые<br>работают прямо сейчас</h2>
+      <h2 class="section-title reveal reveal-title">Акции, которые<br>работают прямо сейчас</h2>
     </div>
     <div class="promos-grid">
       <div class="promo-card reveal">
@@ -1043,7 +1201,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
     </div>
     <div class="about-text">
       <span class="label reveal">О нас</span>
-      <h2 class="about-title reveal">Кофе перестаёт быть<br>просто напитком</h2>
+      <h2 class="about-title reveal reveal-title">Кофе перестаёт быть<br>просто напитком</h2>
       <p class="about-body reveal">
         «Кофеин» открылся в 2022 году — чтобы в центре Москвы появился уютный островок, где можно и продуктивно поработать, и душевно провести время.<br><br>
         Мы не сеть и не франшиза. Здесь помнят любимые столики и спрашивают «как обычно?» — потому что каждый гость для нас сосед, а не транзакция.
@@ -1069,7 +1227,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
         </div>
         <div class="phil-item reveal">
           <div class="phil-icon sand">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 3L21 12V21H14V15H10V21H3V12z"/></svg>
           </div>
           <div class="phil-text">
             <div class="phil-title">Ваш сосед, а не бариста</div>
@@ -1079,19 +1237,19 @@ button { border: none; cursor: pointer; font-family: inherit; }
       </div>
       <div class="amenities-grid reveal">
         <div class="amenity">
-          <span class="amenity-icon sage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.42 9a16 16 0 0 1 21.16 0M5 12.55a11 11 0 0 1 14.08 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg></span>
+          <span class="amenity-icon sage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5a10.5 10.5 0 0 1 15 0M7.5 13.5a7 7 0 0 1 9 0M10.5 16.5a3 3 0 0 1 3 0M12 20v.5"/></svg></span>
           Быстрый Wi-Fi
         </div>
         <div class="amenity">
-          <span class="amenity-icon sand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v5M14 2v5M7 7h10v5a5 5 0 0 1-10 0V7zM12 17v3"/></svg></span>
+          <span class="amenity-icon sand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2L8 12L14 12L10 22"/></svg></span>
           Розетки у каждого стола
         </div>
         <div class="amenity">
-          <span class="amenity-icon sage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5zM8.5 8.5h.01M12 12h.01M15.5 15.5h.01"/></svg></span>
+          <span class="amenity-icon sage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L3 12L12 21L21 12L12 3z"/></svg></span>
           Шахматы, UNO, Манчкин
         </div>
         <div class="amenity">
-          <span class="amenity-icon sand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l5 5-12 12H4v-5L16 3z"/></svg></span>
+          <span class="amenity-icon sand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a6 6 0 1 0 .01 0M12 14v5M11 19l1 1.5 1-1.5"/></svg></span>
           Детский уголок
         </div>
         <div class="amenity">
@@ -1155,7 +1313,16 @@ button { border: none; cursor: pointer; font-family: inherit; }
   </div>
   <div class="container">
     <div class="gallery-footer">
-      <p class="gallery-instagram reveal">Мы в Instagram: <strong>@cofein.coffee</strong></p>
+      <a href="https://instagram.com/cofein.coffee" class="ig-badge reveal" target="_blank" rel="noopener" aria-label="Instagram @cofein.coffee">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="5"/>
+          <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+        </svg>
+        <span class="ig-label">Мы в Instagram</span>
+        <span class="ig-sep"></span>
+        <span class="ig-handle">@cofein.coffee</span>
+      </a>
       <a href="#contacts" class="btn btn-outline-light reveal">Смотреть все фото →</a>
     </div>
   </div>
@@ -1166,7 +1333,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
   <div class="container">
     <div class="reviews-header">
       <span class="label">Говорят гости</span>
-      <h2 class="reviews-title reveal">★★★★★ 4.9 на Google</h2>
+      <h2 class="reviews-title reveal reveal-title">★★★★★ 4.9 на Google</h2>
       <p class="reviews-meta reveal">340+ отзывов — и мы читаем каждый</p>
     </div>
     <div class="carousel-wrap">
@@ -1234,16 +1401,16 @@ button { border: none; cursor: pointer; font-family: inherit; }
   <div class="container">
     <div class="booking-info">
       <span class="label label--light">Бронирование</span>
-      <h2 class="booking-title reveal">Зарезервируй<br>свой столик</h2>
+      <h2 class="booking-title reveal reveal-title">Зарезервируй<br>свой столик</h2>
       <p class="booking-desc reveal">Заполни форму — мы свяжемся в течение 15 минут и подтвердим бронирование.</p>
       <div class="booking-tg reveal">
-        <span class="tg-icon">💬</span>
+        <span class="tg-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2z"/></svg></span>
         <span>Или напиши нам — ответим быстро</span>
       </div>
       <a href="https://t.me/cofein_bot" class="btn btn-outline-light reveal" target="_blank" rel="noopener">Открыть Telegram-бот →</a>
       <div class="booking-contacts reveal">
-        <a href="tel:+79990000000">📞 +7 (999) 000-00-00</a>
-        <a href="mailto:hello@cofein.coffee">✉️ hello@cofein.coffee</a>
+        <a href="tel:+79990000000"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:.3em"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>+7 (999) 000-00-00</a>
+        <a href="mailto:hello@cofein.coffee"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:.3em"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6"/></svg>hello@cofein.coffee</a>
       </div>
     </div>
     <div class="booking-form-wrap reveal">
@@ -1295,7 +1462,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
     </div>
     <div class="contacts-info">
       <span class="label">Мы здесь</span>
-      <h2 class="contacts-title reveal">ул. Ленина, д. 15</h2>
+      <h2 class="contacts-title reveal reveal-title">ул. Ленина, д. 15</h2>
       <div class="contacts-list">
         <div class="contact-item reveal">
           <div class="contact-icon sage">
@@ -1428,7 +1595,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal, .reveal-title').forEach(el => revealObserver.observe(el));
 
 // ── Stagger siblings ──────────────────────────────────────────────
 document.querySelectorAll('.features-list .reveal, .philosophy .reveal, .menu-grid .reveal').forEach((el, i) => {
@@ -1508,6 +1675,79 @@ carouselEl.addEventListener('touchend', e => {
   const diff = touchStartX - e.changedTouches[0].screenX;
   if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
 });
+
+// ── WOW: Scroll progress bar ──────────────────────────────────────
+const progressBar = document.createElement('div');
+progressBar.className = 'scroll-progress';
+document.body.prepend(progressBar);
+
+// ── WOW: Hero ambient glow + grain ────────────────────────────────
+const heroSection = document.querySelector('.hero');
+if (heroSection) {
+  const ambient = document.createElement('div'); ambient.className = 'hero-ambient';
+  const grain   = document.createElement('div'); grain.className   = 'hero-grain';
+  heroSection.append(ambient, grain);
+}
+
+// ── WOW: Parallax hero bg ─────────────────────────────────────────
+const heroBgEl = document.querySelector('.hero-bg');
+let pxTick = false;
+function doParallax() {
+  const y = window.scrollY;
+  if (heroBgEl && y < window.innerHeight * 1.3)
+    heroBgEl.style.transform = `translateY(${y * 0.28}px)`;
+  pxTick = false;
+}
+
+// ── WOW: Scroll listener (progress + parallax) ────────────────────
+window.addEventListener('scroll', () => {
+  const max = document.body.scrollHeight - window.innerHeight;
+  progressBar.style.width = Math.min((window.scrollY / max) * 100, 100) + '%';
+  if (!pxTick) { requestAnimationFrame(doParallax); pxTick = true; }
+}, { passive: true });
+
+// ── WOW: 3D card tilt + custom cursor (desktop only) ─────────────
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+
+  // 3D tilt on menu cards
+  document.querySelectorAll('.menu-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transition = 'transform .08s ease, box-shadow .08s ease';
+      card.style.transform  = `perspective(900px) rotateY(${x*10}deg) rotateX(${-y*8}deg) translateY(-6px)`;
+      card.style.boxShadow  = `${-x*14}px ${-y*8}px 40px rgba(0,0,0,.28)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform .5s ease, box-shadow .5s ease';
+      card.style.transform = ''; card.style.boxShadow = '';
+    });
+  });
+
+  // Custom cursor
+  const dot  = document.createElement('div'); dot.className  = 'cursor-dot';
+  const ring = document.createElement('div'); ring.className = 'cursor-ring';
+  document.body.append(dot, ring);
+
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  });
+  (function animRing() {
+    rx += (mx - rx) * 0.13; ry += (my - ry) * 0.13;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  })();
+
+  document.querySelectorAll('a, button, .menu-card, .promo-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { dot.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { dot.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+  document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
+}
 
 // ── Smooth scroll for anchor links ───────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(a => {
