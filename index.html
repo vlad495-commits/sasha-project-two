@@ -141,13 +141,6 @@ button { border: none; cursor: pointer; font-family: inherit; }
 }
 
 /* ─── WOW: NAV LINK UNDERLINE ───────────────────────────────────── */
-.nav-links a { position: relative; }
-.nav-links a::after {
-  content: ''; position: absolute; bottom: -3px; left: 0;
-  width: 0; height: 1px; background: var(--terra);
-  transition: width .28s ease;
-}
-.nav-links a:hover::after { width: 100%; }
 
 /* ─── WOW: ICON HOVER ───────────────────────────────────────────── */
 .feat-icon, .phil-icon, .amenity-icon, .contact-icon {
@@ -214,11 +207,13 @@ button { border: none; cursor: pointer; font-family: inherit; }
   transition: color .2s;
   position: relative;
 }
-.nav-links a::after {
-  content: ''; position: absolute; bottom: -3px; left: 0; right: 100%;
-  height: 1px; background: var(--terra); transition: right .25s ease;
+.nav-links a:not(.btn)::after {
+  content: ''; position: absolute; bottom: -3px; left: 0;
+  width: 100%; height: 1px; background: var(--terra);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.nav-links a:hover::after { right: 0; }
+.nav-links a:not(.btn):hover::after { transform: scaleX(1); }
 .nav-links a:hover { color: var(--beige); }
 .nav-cta { margin-left: 1rem; }
 .hamburger {
@@ -245,8 +240,13 @@ button { border: none; cursor: pointer; font-family: inherit; }
 /* ─── HERO ─────────────────────────────────────────────────────── */
 .hero {
   position: relative; min-height: 100dvh;
-  display: flex; align-items: center;
+  display: flex; flex-direction: column; align-items: flex-start;
   background: var(--green); overflow: hidden;
+}
+.hero-top {
+  flex: 0 0 auto;
+  padding: clamp(88px, 14vh, 130px) var(--pad-x) 0;
+  position: relative; z-index: 2; width: 100%;
 }
 .hero-bg {
   position: absolute; inset: 0;
@@ -258,48 +258,89 @@ button { border: none; cursor: pointer; font-family: inherit; }
 }
 @keyframes heroBgZoom { from { transform: scale(1.06); } to { transform: scale(1); } }
 
+/* ── Hero botanical decor ── */
 .hero-decor {
-  position: absolute; right: 8%; top: 50%; transform: translateY(-50%);
-  width: clamp(200px, 30vw, 420px); opacity: .12; pointer-events: none;
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: clamp(260px, 38vw, 520px); pointer-events: none; z-index: 1; overflow: visible;
 }
-.hero-decor circle { animation: steamPulse 4s ease-in-out infinite alternate; }
-@keyframes steamPulse { from { r: 80; } to { r: 95; } }
+.hero-decor svg {
+  position: absolute; bottom: 0; right: -4%;
+  width: 105%; height: 100%;
+  animation: botanicalSway 11s ease-in-out 3.5s infinite;
+  transform-origin: 90% 98%;
+}
+@keyframes botanicalSway {
+  0%,100% { transform: rotate(0deg); }
+  35% { transform: rotate(1.5deg); }
+  70% { transform: rotate(-.9deg); }
+}
+@media (max-width: 1024px) { .hero-decor { opacity: .25; } }
+@media (max-width: 768px)  { .hero-decor { display: none; } }
+.la-stem  { stroke-dasharray:1; stroke-dashoffset:1; animation: laReveal 2.4s ease-out .2s forwards; }
+.la-twig  { stroke-dasharray:1; stroke-dashoffset:1; animation: laReveal .8s ease-out var(--d,1s) forwards; }
+.la-leaf  { opacity:0; animation: fadeIn .7s ease-out var(--d,1.2s) forwards; }
+.la-berry { opacity:0; animation: fadeIn .45s ease-out var(--d,1.8s) forwards; }
+@keyframes laReveal { to { stroke-dashoffset: 0; } }
 
 .hero-content {
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+  padding: 0 var(--pad-x) clamp(40px, 8vh, 80px);
   position: relative; z-index: 2;
-  padding: clamp(100px,15vh,160px) var(--pad-x) clamp(80px,10vh,120px);
-  max-width: 720px;
+  max-width: 720px; width: 100%;
 }
 .hero-label {
+  position: static;
+  top: auto;
+  left: var(--pad-x);
   opacity: 0; transform: translateY(-8px);
   animation: fadeSlideDown .5s .15s ease forwards;
   color: rgba(240,230,208,.65); font-size: .75rem;
   letter-spacing: .15em; text-transform: uppercase;
-  margin-bottom: 1.5rem;
 }
 @keyframes fadeSlideDown { to { opacity: 1; transform: none; } }
 
+.hero-number {
+  display: block; font-family: 'DM Mono', monospace;
+  font-size: .7rem; letter-spacing: .18em;
+  color: rgba(240,230,208,.4); margin-bottom: 2rem;
+  opacity: 0; animation: fadeIn .4s .15s ease forwards;
+}
 .hero-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3rem,9vw,7.5rem);
-  font-weight: 300; line-height: 1.05;
-  color: var(--beige); margin-bottom: 1.5rem;
+  font-size: clamp(3.2rem, 7.5vw, 7rem);
+  font-weight: 300; line-height: 1.0;
+  letter-spacing: -.03em;
+  color: var(--beige); margin-bottom: 0;
 }
-.hero-title .line {
-  display: block; overflow: hidden;
-}
-.hero-title .line span {
+.hero-title .line { display: block; overflow: visible; }
+.hero-title .line > span {
   display: block;
-  opacity: 0; transform: translateY(100%);
-  animation: lineReveal .65s ease forwards;
+  opacity: 0; transform: translateY(24px);
+  animation: lineReveal .72s cubic-bezier(.25,.46,.45,.94) forwards;
 }
-.hero-title .line:nth-child(1) span { animation-delay: .25s; }
-.hero-title .line:nth-child(2) span { animation-delay: .4s; }
+.hero-title .line:nth-child(1) > span { animation-delay: .25s; }
+.hero-title .line:nth-child(2) > span { animation-delay: .42s; }
 @keyframes lineReveal { to { opacity: 1; transform: none; } }
+
+/* kinetic — сменяющиеся слова */
+.hero-kinetic {
+  display: inline-grid;
+  font-style: italic;
+  color: var(--terra);
+}
+.hero-kinetic .hero-word {
+  grid-row: 1; grid-column: 1;
+  white-space: nowrap;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.25,.46,.45,.94);
+}
+.hero-kinetic .hero-word.active {
+  opacity: 1; transform: translateY(0);
+}
 
 .hero-sub {
   font-size: clamp(1rem,2vw,1.2rem);
-  color: rgba(240,230,208,.75); margin-bottom: 2.5rem; line-height: 1.6;
+  color: rgba(240,230,208,.75); margin-bottom: 6.5rem; line-height: 1.6;
   opacity: 0; animation: fadeIn .5s .6s ease forwards;
 }
 @keyframes fadeIn { to { opacity: 1; } }
@@ -384,17 +425,23 @@ button { border: none; cursor: pointer; font-family: inherit; }
 }
 .feat-icon.sage { background: #6B7F5A; }
 .feat-icon.sand { background: #D0C4AB; }
-.atm-photos {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-}
-.atm-photo {
-  border-radius: var(--radius); overflow: hidden;
-  background: var(--beige-warm);
-  aspect-ratio: 4/5;
+.atm-slider {
   position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4/3;
 }
-.atm-photo:first-child { grid-column: span 2; aspect-ratio: 16/9; }
-.atm-photo img { width: 100%; height: 100%; object-fit: cover; }
+.atm-slides {
+  display: flex;
+  height: 100%;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.atm-slide {
+  min-width: 100%; height: 100%;
+  background: var(--beige-warm);
+  flex-shrink: 0;
+}
+.atm-slide img { width: 100%; height: 100%; object-fit: cover; }
 .photo-placeholder {
   width: 100%; height: 100%;
   display: flex; align-items: center; justify-content: center;
@@ -403,6 +450,20 @@ button { border: none; cursor: pointer; font-family: inherit; }
   color: var(--text-muted); font-size: .8rem;
 }
 .photo-placeholder svg { opacity: .4; }
+.atm-nav {
+  position: absolute; bottom: 20px; right: 20px;
+  display: flex; gap: 10px;
+}
+.atm-nav-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid var(--terra);
+  color: var(--terra);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.atm-nav-btn:hover { background: var(--terra); color: var(--beige); }
 
 /* ─── MENU ──────────────────────────────────────────────────────── */
 .menu-sec {
@@ -948,6 +1009,35 @@ button { border: none; cursor: pointer; font-family: inherit; }
     transition-duration: .01ms !important;
   }
 }
+
+/* ─── BACK TO TOP ──────────────────────────────────────────────── */
+.back-to-top {
+  position: fixed; bottom: 90px; right: 20px; z-index: 150;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--terra); color: var(--beige);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: bold;
+  box-shadow: 0 0 20px rgba(196,98,45,.5);
+  opacity: 0; pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+.back-to-top.visible {
+  opacity: 1; pointer-events: auto; transform: none;
+  animation: btt-pulse 2s ease-in-out infinite;
+}
+@keyframes btt-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(196,98,45,.5); }
+  50% { box-shadow: 0 0 32px rgba(196,98,45,.8), 0 0 48px rgba(196,98,45,.4); }
+}
+.back-to-top:hover {
+  background: var(--green);
+  box-shadow: 0 0 24px rgba(30,51,32,.6);
+  animation: none;
+}
+@media (min-width: 768px) {
+  .back-to-top { bottom: 32px; right: 32px; }
+}
 </style>
 </head>
 
@@ -982,19 +1072,128 @@ button { border: none; cursor: pointer; font-family: inherit; }
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-bg"></div>
-  <svg class="hero-decor" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="200" cy="200" r="80" fill="white" opacity=".6"/>
-    <circle cx="200" cy="200" r="120" stroke="white" stroke-width="1" opacity=".3"/>
-    <circle cx="200" cy="200" r="160" stroke="white" stroke-width="1" opacity=".15"/>
-    <circle cx="200" cy="200" r="200" stroke="white" stroke-width="1" opacity=".08"/>
-    <path d="M200 120 Q220 160 200 200 Q180 160 200 120Z" fill="white" opacity=".4"/>
-    <path d="M200 130 Q215 165 200 195 Q185 165 200 130Z" fill="white" opacity=".3"/>
-  </svg>
-  <div class="hero-content">
+  <div class="hero-decor">
+    <svg viewBox="0 0 460 720" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Градиент листа — тёмно-зелёный с блеском -->
+        <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#4A8B2A"/>
+          <stop offset="55%"  stop-color="#2E5E18"/>
+          <stop offset="100%" stop-color="#1E4210"/>
+        </linearGradient>
+        <linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#5AA030"/>
+          <stop offset="55%"  stop-color="#357020"/>
+          <stop offset="100%" stop-color="#224C12"/>
+        </linearGradient>
+        <linearGradient id="lg3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#3E7822"/>
+          <stop offset="55%"  stop-color="#285416"/>
+          <stop offset="100%" stop-color="#18380C"/>
+        </linearGradient>
+        <!-- Градиент спелой ягоды -->
+        <radialGradient id="rg-red" cx="35%" cy="30%" r="60%">
+          <stop offset="0%"   stop-color="#E84040"/>
+          <stop offset="100%" stop-color="#8B1A1A"/>
+        </radialGradient>
+        <!-- Зелёная ягода -->
+        <radialGradient id="rg-green" cx="35%" cy="30%" r="60%">
+          <stop offset="0%"   stop-color="#5CBB35"/>
+          <stop offset="100%" stop-color="#2A5E14"/>
+        </radialGradient>
+        <!-- Полуспелая ягода -->
+        <radialGradient id="rg-orange" cx="35%" cy="30%" r="60%">
+          <stop offset="0%"   stop-color="#D4621A"/>
+          <stop offset="100%" stop-color="#8B3010"/>
+        </radialGradient>
+      </defs>
+
+      <!-- ══ ГЛАВНАЯ ВЕТКА — коричневый стебель, от нижнего правого угла ══ -->
+      <path d="M455 718 C440 672 420 625 396 578 C372 531 346 490 320 452 C294 414 270 380 250 348 C230 316 216 288 210 262"
+        fill="none" stroke="#6B3E20" stroke-width="5" stroke-linecap="round" pathLength="1" class="la-stem"/>
+      <!-- Тонкая веточка продолжение наверх -->
+      <path d="M210 262 C204 236 200 210 200 184 C200 158 204 135 210 115"
+        fill="none" stroke="#6B3E20" stroke-width="3.5" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:2.2s"/>
+
+      <!-- ══ УЗЕЛ 1 — нижний (~396, 578) ══ -->
+      <!-- Черешок влево -->
+      <path d="M393 575 C375 568 352 564 330 568" fill="none" stroke="#5C3218" stroke-width="2.5" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:.9s"/>
+      <!-- Черешок вправо -->
+      <path d="M400 572 C418 562 438 554 452 550" fill="none" stroke="#5C3218" stroke-width="2.5" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:1.0s"/>
+      <!-- Лист левый (крупный, drooping) -->
+      <path d="M330 568 C305 554 272 546 242 558 C222 566 218 582 232 592 C250 604 290 600 330 568Z"
+        fill="url(#lg1)" stroke="#1A3A0A" stroke-width="1" class="la-leaf" style="--d:1.1s"/>
+      <path d="M330 568 C300 570 268 572 242 575" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:1.25s"/>
+      <!-- Лист правый (к краю) -->
+      <path d="M452 550 C458 534 456 514 446 502 C436 492 422 494 416 506 C408 522 420 544 452 550Z"
+        fill="url(#lg2)" stroke="#1A3A0A" stroke-width="1" class="la-leaf" style="--d:1.15s"/>
+      <path d="M452 550 C448 540 440 530 432 522" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:1.3s"/>
+      <!-- Ягоды — кластер спелых и зелёных -->
+      <circle cx="388" cy="572" r="8"   fill="url(#rg-red)"   class="la-berry" style="--d:1.5s"/>
+      <circle cx="400" cy="565" r="7.5" fill="url(#rg-red)"   class="la-berry" style="--d:1.58s"/>
+      <circle cx="380" cy="562" r="7"   fill="url(#rg-orange)" class="la-berry" style="--d:1.65s"/>
+      <circle cx="393" cy="558" r="6.5" fill="url(#rg-green)" class="la-berry" style="--d:1.72s"/>
+      <!-- Блики на ягодах -->
+      <circle cx="384" cy="568" r="2.2" fill="rgba(255,255,255,0.45)" class="la-berry" style="--d:1.78s"/>
+      <circle cx="396" cy="561" r="2"   fill="rgba(255,255,255,0.4)"  class="la-berry" style="--d:1.82s"/>
+
+      <!-- ══ УЗЕЛ 2 — средний (~320, 452) ══ -->
+      <!-- Черешки -->
+      <path d="M317 450 C298 440 272 433 248 438" fill="none" stroke="#5C3218" stroke-width="2.2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:1.95s"/>
+      <path d="M324 448 C342 436 364 425 382 422" fill="none" stroke="#5C3218" stroke-width="2.2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:2.0s"/>
+      <!-- Лист левый (длинный, уходит в экран) -->
+      <path d="M248 438 C222 424 188 415 160 426 C140 434 136 450 150 460 C168 472 208 468 248 438Z"
+        fill="url(#lg1)" stroke="#1A3A0A" stroke-width="1" class="la-leaf" style="--d:2.05s"/>
+      <path d="M248 438 C218 442 186 446 160 445" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:2.2s"/>
+      <!-- Лист правый -->
+      <path d="M382 422 C400 408 416 390 412 372 C408 356 394 352 382 362 C368 374 368 400 382 422Z"
+        fill="url(#lg3)" stroke="#1A3A0A" stroke-width="1" class="la-leaf" style="--d:2.1s"/>
+      <path d="M382 422 C392 408 400 392 398 376" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.25s"/>
+      <!-- Ягоды узел 2 — 3 спелых -->
+      <circle cx="314" cy="448" r="7.5" fill="url(#rg-red)"   class="la-berry" style="--d:2.4s"/>
+      <circle cx="325" cy="442" r="7"   fill="url(#rg-red)"   class="la-berry" style="--d:2.48s"/>
+      <circle cx="308" cy="440" r="6.5" fill="url(#rg-orange)" class="la-berry" style="--d:2.54s"/>
+      <circle cx="310" cy="444" r="2"   fill="rgba(255,255,255,0.42)" class="la-berry" style="--d:2.6s"/>
+
+      <!-- ══ УЗЕЛ 3 — верхний (~250, 348) ══ -->
+      <!-- Черешки -->
+      <path d="M248 346 C228 334 200 325 175 330" fill="none" stroke="#5C3218" stroke-width="2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:2.75s"/>
+      <path d="M254 344 C272 330 292 318 310 316" fill="none" stroke="#5C3218" stroke-width="2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:2.8s"/>
+      <!-- Лист левый -->
+      <path d="M175 330 C150 316 118 310 96 320 C78 328 76 344 90 354 C108 366 146 360 175 330Z"
+        fill="url(#lg2)" stroke="#1A3A0A" stroke-width="1" class="la-leaf" style="--d:2.88s"/>
+      <path d="M175 330 C148 336 118 342 96 342" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:3.0s"/>
+      <!-- Лист правый (короче) -->
+      <path d="M310 316 C328 302 342 284 336 268 C330 254 316 252 306 264 C294 278 294 302 310 316Z"
+        fill="url(#lg1)" stroke="#1A3A0A" stroke-width="1" class="la-leaf" style="--d:2.92s"/>
+      <path d="M310 316 C320 302 328 286 326 270" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:3.05s"/>
+      <!-- Ягоды узел 3 — 2 спелых + 1 зелёная -->
+      <circle cx="246" cy="344" r="7"   fill="url(#rg-red)"   class="la-berry" style="--d:3.1s"/>
+      <circle cx="257" cy="338" r="6.5" fill="url(#rg-green)" class="la-berry" style="--d:3.18s"/>
+      <circle cx="240" cy="336" r="5.8" fill="url(#rg-red)"   class="la-berry" style="--d:3.24s"/>
+      <circle cx="242" cy="340" r="1.8" fill="rgba(255,255,255,0.4)" class="la-berry" style="--d:3.3s"/>
+
+      <!-- ══ ВЕРХУШКА — молодые листья + бутоны (белые цветы Coffea) ══ -->
+      <path d="M210 115 C205 95 204 76 208 58" fill="none" stroke="#5C3218" stroke-width="2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:3.4s"/>
+      <!-- Маленький лист верхушки левый -->
+      <path d="M208 85 C195 74 178 70 165 78 C155 84 156 96 166 100 C180 106 198 98 208 85Z"
+        fill="url(#lg2)" stroke="#1A3A0A" stroke-width=".8" class="la-leaf" style="--d:3.5s"/>
+      <!-- Маленький лист верхушки правый -->
+      <path d="M208 85 C220 74 236 70 246 78 C254 86 252 98 240 102 C226 106 212 98 208 85Z"
+        fill="url(#lg2)" stroke="#1A3A0A" stroke-width=".8" class="la-leaf" style="--d:3.55s"/>
+      <!-- Белые цветы Coffea arabica — маленькие звёздочки -->
+      <circle cx="208" cy="62" r="5"   fill="rgba(255,252,240,0.9)" class="la-berry" style="--d:3.7s"/>
+      <circle cx="200" cy="56" r="3.8" fill="rgba(255,252,240,0.75)" class="la-berry" style="--d:3.78s"/>
+      <circle cx="217" cy="55" r="3.5" fill="rgba(255,252,240,0.7)"  class="la-berry" style="--d:3.85s"/>
+    </svg>
+  </div>
+  <div class="hero-top">
     <span class="hero-label">Кофейня · ул. Ленина, 15 · Москва</span>
+  </div>
+  <div class="hero-content">
     <h1 class="hero-title">
       <span class="line"><span>Кофе у нас —</span></span>
-      <span class="line"><span>это вкусно.</span></span>
+      <span class="line"><span>это <span class="hero-kinetic"><span class="hero-word active">вкусно.</span><span class="hero-word">тепло.</span><span class="hero-word">близко.</span><span class="hero-word">твоё.</span></span></span></span>
     </h1>
     <p class="hero-sub">Кофе с собой — это быстро.<br>Приходи посидеть!</p>
     <div class="hero-cta-wrap">
@@ -1084,24 +1283,30 @@ button { border: none; cursor: pointer; font-family: inherit; }
         </li>
       </ul>
     </div>
-    <div class="atm-photos">
-      <div class="atm-photo reveal">
-        <div class="photo-placeholder">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Фото зала</span>
+    <div class="atm-slider reveal" id="atmSlider">
+      <div class="atm-slides" id="atmSlides">
+        <div class="atm-slide">
+          <div class="photo-placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Фото зала</span>
+          </div>
+        </div>
+        <div class="atm-slide">
+          <div class="photo-placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Детский уголок</span>
+          </div>
+        </div>
+        <div class="atm-slide">
+          <div class="photo-placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Рабочий стол</span>
+          </div>
         </div>
       </div>
-      <div class="atm-photo reveal">
-        <div class="photo-placeholder">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Детский уголок</span>
-        </div>
-      </div>
-      <div class="atm-photo reveal">
-        <div class="photo-placeholder">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Рабочий стол</span>
-        </div>
+      <div class="atm-nav">
+        <button class="atm-nav-btn" id="atmPrev" aria-label="Назад">←</button>
+        <button class="atm-nav-btn" id="atmNext" aria-label="Вперёд">→</button>
       </div>
     </div>
   </div>
@@ -1550,6 +1755,9 @@ button { border: none; cursor: pointer; font-family: inherit; }
   </div>
 </footer>
 
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" aria-label="Наверх">↑</button>
+
 <!-- MOBILE STICKY BAR -->
 <div class="sticky-bar" id="stickyBar">
   <a href="tel:+79990000000" class="sticky-call">📞 Позвонить</a>
@@ -1557,6 +1765,30 @@ button { border: none; cursor: pointer; font-family: inherit; }
 </div>
 
 <script>
+// ── Atmosphere slider ──────────────────────────────────────────────
+(function() {
+  const slides = document.getElementById('atmSlides');
+  const total = slides ? slides.children.length : 0;
+  let cur = 0;
+  function goTo(i) {
+    cur = (i + total) % total;
+    slides.style.transform = `translateX(-${cur * 100}%)`;
+  }
+  const prev = document.getElementById('atmPrev');
+  const next = document.getElementById('atmNext');
+  if (prev) prev.addEventListener('click', () => goTo(cur - 1));
+  if (next) next.addEventListener('click', () => goTo(cur + 1));
+})();
+
+// ── Back to top ────────────────────────────────────────────────────
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  backToTop.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 // ── NAV scroll effect ──────────────────────────────────────────────
 const nav = document.getElementById('nav');
 const scrollIndicator = document.getElementById('scrollIndicator');
@@ -1584,6 +1816,17 @@ document.querySelectorAll('.mobile-link').forEach(link => {
     document.body.style.overflow = '';
   });
 });
+
+// ── Kinetic hero words ────────────────────────────────────────────
+const heroWords = document.querySelectorAll('.hero-word');
+if (heroWords.length) {
+  let idx = 0;
+  setInterval(() => {
+    heroWords[idx].classList.remove('active');
+    idx = (idx + 1) % heroWords.length;
+    heroWords[idx].classList.add('active');
+  }, 2800);
+}
 
 // ── Intersection Observer (reveal) ────────────────────────────────
 const revealObserver = new IntersectionObserver((entries) => {
