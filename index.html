@@ -261,8 +261,8 @@ button { border: none; cursor: pointer; font-family: inherit; }
 /* ── Hero botanical decor ── */
 .hero-decor {
   /* Right panel, full hero height — branch always fits inside */
-  position: absolute; right: 0; top: 0; bottom: 0;
-  width: clamp(320px, 44vw, 560px);
+  position: absolute; right: -5vw; top: 0; bottom: 0;
+  width: clamp(340px, 50vw, 640px);
   pointer-events: none; z-index: 1;
   display: flex; align-items: center;
   /* Entrance: slide in from right + fade */
@@ -285,7 +285,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
   65%     { transform: scaleX(-1) rotate(1.2deg); }
   85%     { transform: scaleX(-1) rotate(-.6deg); }
 }
-@media (max-width: 1024px) { .hero-decor { opacity: .45; width: clamp(260px, 38vw, 440px); } }
+@media (max-width: 1024px) { .hero-decor { opacity: .45; right: -4vw; width: clamp(260px, 42vw, 480px); } }
 @media (max-width: 768px)  { .hero-decor { display: none; } }
 
 .hero-content {
@@ -540,28 +540,11 @@ button { border: none; cursor: pointer; font-family: inherit; }
 .promos {
   padding: var(--pad-section) 0;
   background: var(--beige-warm);
-  position: relative;
-  overflow: hidden;
 }
-.promo-cup {
-  position: absolute;
-  bottom: -20px; right: clamp(20px, 6vw, 80px);
-  width: clamp(100px, 14vw, 180px);
-  opacity: .1;
-  pointer-events: none;
-}
-.steam-line {
-  transform-origin: bottom center;
-  animation: steamRise 3s ease-in-out infinite;
-}
-.steam-line:nth-child(2) { animation-delay: 1s; }
-.steam-line:nth-child(3) { animation-delay: 2s; }
-@keyframes steamRise {
-  0%   { opacity: 0;   transform: translateY(0)   scaleX(1); }
-  30%  { opacity: .9; }
-  70%  { opacity: .4; }
-  100% { opacity: 0;   transform: translateY(-40px) scaleX(1.4); }
-}
+.promo-card.reveal-left  { opacity: 0; transform: translateX(-48px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.promo-card.reveal-right { opacity: 0; transform: translateX(48px);  transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.promo-card.reveal-right.visible { opacity: 1; transform: none; transition-delay: .15s; }
+.promo-card.reveal-left.visible  { opacity: 1; transform: none; }
 .promos-header { text-align: center; margin-bottom: clamp(32px,5vw,56px); }
 .section-title {
   font-family: 'Cormorant Garamond', serif;
@@ -1313,35 +1296,20 @@ button { border: none; cursor: pointer; font-family: inherit; }
 
 <!-- PROMOS -->
 <section class="promos" id="promos">
-  <svg class="promo-cup" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- пар -->
-    <path class="steam-line" d="M38 30 C34 22 42 14 38 6" stroke="#1E3320" stroke-width="3" stroke-linecap="round"/>
-    <path class="steam-line" d="M55 30 C51 22 59 14 55 6" stroke="#1E3320" stroke-width="3" stroke-linecap="round"/>
-    <path class="steam-line" d="M72 30 C68 22 76 14 72 6" stroke="#1E3320" stroke-width="3" stroke-linecap="round"/>
-    <!-- блюдце -->
-    <ellipse cx="60" cy="118" rx="46" ry="10" stroke="#1E3320" stroke-width="3"/>
-    <path d="M22 112 Q60 122 98 112" stroke="#1E3320" stroke-width="3" stroke-linecap="round" fill="none"/>
-    <!-- чашка -->
-    <path d="M20 50 L28 108 Q60 116 92 108 L100 50 Z" stroke="#1E3320" stroke-width="3" stroke-linejoin="round" fill="none"/>
-    <!-- ручка -->
-    <path d="M100 62 Q118 62 118 78 Q118 94 100 94" stroke="#1E3320" stroke-width="3" stroke-linecap="round" fill="none"/>
-    <!-- верх чашки -->
-    <ellipse cx="60" cy="50" rx="40" ry="9" stroke="#1E3320" stroke-width="3" fill="none"/>
-  </svg>
   <div class="container">
     <div class="promos-header">
       <span class="label">Для наших гостей</span>
       <h2 class="section-title reveal reveal-title">Акции, которые<br>работают прямо сейчас</h2>
     </div>
     <div class="promos-grid">
-      <div class="promo-card reveal">
+      <div class="promo-card reveal-left">
         <span class="promo-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:.3em"><path d="M8 4c0 1-1 1.5-1 2.5M12 4c0 1-1 1.5-1 2.5M5 7h14v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V7zM19 7h1a2 2 0 1 1 0 4h-1"/></svg>Тихий час</span>
         <h3 class="promo-title">−20% на второй кофе</h3>
         <p class="promo-desc">Самое тихое время в кофейне. Бери ноутбук, заказывай первый — второй за наш счёт на 20%.</p>
         <p class="promo-detail">Будни · 14:00–16:00</p>
         <a href="#booking" class="btn btn-outline-dark" style="align-self:flex-start;">Прийти в тихий час</a>
       </div>
-      <div class="promo-card reveal">
+      <div class="promo-card reveal-right">
         <span class="promo-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:.3em"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>Кофе за фото</span>
         <h3 class="promo-title">Кофе в подарок за пост</h3>
         <p class="promo-desc">Сфотографируйся в «Кофеине», опубликуй в Instagram, покажи баристе по QR-коду — и получи кофе в подарок.</p>
@@ -1745,7 +1713,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 
-document.querySelectorAll('.reveal, .reveal-title').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal, .reveal-title, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
 
 // ── Stagger siblings ──────────────────────────────────────────────
 document.querySelectorAll('.features-list .reveal, .philosophy .reveal, .menu-grid .reveal').forEach((el, i) => {
