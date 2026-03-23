@@ -260,30 +260,33 @@ button { border: none; cursor: pointer; font-family: inherit; }
 
 /* ── Hero botanical decor ── */
 .hero-decor {
-  position: absolute; right: -6%; top: 50%;
-  transform: translateY(-52%);
-  width: clamp(300px, 58vw, 720px);
+  position: absolute; right: -3%; top: 50%;
+  transform: translateY(-50%);
+  width: clamp(300px, 50vw, 660px);
   pointer-events: none; z-index: 1; overflow: visible;
 }
 .hero-decor img {
   width: 100%; height: auto; display: block;
-  transform-origin: 96% 55%;
-  filter: drop-shadow(0 12px 28px rgba(10,30,5,0.32));
-  animation: branchAppear 1.2s ease-out both, botanicalSway 9s ease-in-out 1.4s infinite;
+  transform: scaleX(-1);        /* flip: stem enters from right edge */
+  mix-blend-mode: multiply;     /* white bg disappears on beige site */
+  transform-origin: 90% 78%;   /* pivot = stem base (bottom-right after flip) */
+  filter: drop-shadow(3px 10px 22px rgba(10,35,5,0.26));
+  animation:
+    branchAppear 1.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+    botanicalSway 10s ease-in-out 2.0s infinite;
 }
 @keyframes branchAppear {
-  from { opacity: 0; transform: rotate(-3deg) translateX(40px); }
-  to   { opacity: 1; transform: rotate(0deg)  translateX(0); }
+  0%   { opacity: 0; transform: scaleX(-1) translateX(80px) rotate(-6deg); }
+  100% { opacity: 1; transform: scaleX(-1) translateX(0)    rotate(0deg); }
 }
 @keyframes botanicalSway {
-  0%,100% { transform: rotate(0deg); }
-  28%     { transform: rotate(2deg); }
-  60%     { transform: rotate(-1.3deg); }
-  82%     { transform: rotate(.7deg); }
+  0%,100% { transform: scaleX(-1) rotate(0deg); }
+  30%     { transform: scaleX(-1) rotate(2.4deg); }
+  65%     { transform: scaleX(-1) rotate(-1.4deg); }
+  85%     { transform: scaleX(-1) rotate(.8deg); }
 }
-@media (max-width: 1024px) { .hero-decor { opacity: .35; width: clamp(240px, 46vw, 520px); } }
+@media (max-width: 1024px) { .hero-decor { opacity: .4; width: clamp(240px, 44vw, 480px); } }
 @media (max-width: 768px)  { .hero-decor { display: none; } }
-@keyframes laReveal { to { stroke-dashoffset: 0; } }
 
 .hero-content {
   flex: 1; display: flex; flex-direction: column; justify-content: center;
@@ -456,7 +459,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
 .atm-slider-wrap { display: flex; flex-direction: column; }
 .atm-nav {
   display: flex; gap: 10px;
-  justify-content: flex-end;
+  justify-content: center;
   padding-top: 14px;
 }
 .atm-nav-btn {
