@@ -1084,203 +1084,281 @@ button { border: none; cursor: pointer; font-family: inherit; }
 <section class="hero" id="hero">
   <div class="hero-bg"></div>
   <div class="hero-decor">
-    <svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMaxYMid meet">
+    <svg viewBox="0 0 820 430" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMaxYMid meet">
       <defs>
-        <linearGradient id="lg-a" x1="0%" y1="0%" x2="90%" y2="100%">
-          <stop offset="0%"   stop-color="#62B235"/>
-          <stop offset="45%"  stop-color="#3A7220"/>
-          <stop offset="100%" stop-color="#1E4810"/>
+        <!-- ── Leaf gradients (4-stop, realistic coffea arabica green) ── -->
+        <linearGradient id="lg-a" x1="15%" y1="0%" x2="85%" y2="100%">
+          <stop offset="0%"   stop-color="#5CA82E"/>
+          <stop offset="30%"  stop-color="#3A7C18"/>
+          <stop offset="70%"  stop-color="#245010"/>
+          <stop offset="100%" stop-color="#143008"/>
         </linearGradient>
-        <linearGradient id="lg-b" x1="10%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stop-color="#559E2C"/>
-          <stop offset="50%"  stop-color="#306818"/>
-          <stop offset="100%" stop-color="#1A4010"/>
+        <linearGradient id="lg-b" x1="0%" y1="15%" x2="100%" y2="85%">
+          <stop offset="0%"   stop-color="#509625"/>
+          <stop offset="35%"  stop-color="#306A14"/>
+          <stop offset="72%"  stop-color="#1E480C"/>
+          <stop offset="100%" stop-color="#112806"/>
         </linearGradient>
-        <linearGradient id="lg-c" x1="0%" y1="0%" x2="80%" y2="100%">
-          <stop offset="0%"   stop-color="#6AC038"/>
-          <stop offset="48%"  stop-color="#407C22"/>
-          <stop offset="100%" stop-color="#244E12"/>
+        <linearGradient id="lg-c" x1="5%" y1="0%" x2="95%" y2="100%">
+          <stop offset="0%"   stop-color="#68B835"/>
+          <stop offset="32%"  stop-color="#428A1E"/>
+          <stop offset="68%"  stop-color="#285A12"/>
+          <stop offset="100%" stop-color="#163408"/>
         </linearGradient>
+        <!-- Leaf underside (slightly lighter/yellower for naturalism) -->
+        <linearGradient id="lg-under" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#7ACC40"/>
+          <stop offset="50%"  stop-color="#4E8C24"/>
+          <stop offset="100%" stop-color="#2C5414"/>
+        </linearGradient>
+        <!-- Bark — cylindrical 3-D shading -->
         <linearGradient id="lg-bark" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"   stop-color="#9A6035"/>
-          <stop offset="50%"  stop-color="#6B3E20"/>
-          <stop offset="100%" stop-color="#4A2810"/>
+          <stop offset="0%"   stop-color="#C08848"/>
+          <stop offset="20%"  stop-color="#9A6030"/>
+          <stop offset="55%"  stop-color="#6B3E1C"/>
+          <stop offset="85%"  stop-color="#4A2810"/>
+          <stop offset="100%" stop-color="#321808"/>
         </linearGradient>
-        <radialGradient id="rg-r" cx="32%" cy="28%" r="65%">
-          <stop offset="0%"   stop-color="#FF5555"/>
-          <stop offset="60%"  stop-color="#CC2020"/>
-          <stop offset="100%" stop-color="#7A0C0C"/>
+        <!-- Berry gradients — 4-stop, high contrast -->
+        <radialGradient id="rg-r" cx="30%" cy="25%" r="68%">
+          <stop offset="0%"   stop-color="#FF7878"/>
+          <stop offset="28%"  stop-color="#E03030"/>
+          <stop offset="65%"  stop-color="#AA1414"/>
+          <stop offset="100%" stop-color="#6A0808"/>
         </radialGradient>
-        <radialGradient id="rg-c" cx="32%" cy="28%" r="65%">
-          <stop offset="0%"   stop-color="#E02828"/>
-          <stop offset="55%"  stop-color="#AA1414"/>
-          <stop offset="100%" stop-color="#660808"/>
+        <radialGradient id="rg-dr" cx="30%" cy="25%" r="68%">
+          <stop offset="0%"   stop-color="#E04848"/>
+          <stop offset="30%"  stop-color="#B01818"/>
+          <stop offset="68%"  stop-color="#780808"/>
+          <stop offset="100%" stop-color="#480404"/>
         </radialGradient>
-        <radialGradient id="rg-g" cx="32%" cy="28%" r="65%">
-          <stop offset="0%"   stop-color="#74DE42"/>
-          <stop offset="55%"  stop-color="#3C8820"/>
-          <stop offset="100%" stop-color="#1C4410"/>
+        <radialGradient id="rg-o" cx="30%" cy="25%" r="68%">
+          <stop offset="0%"   stop-color="#FFAA44"/>
+          <stop offset="32%"  stop-color="#E07018"/>
+          <stop offset="68%"  stop-color="#B04808"/>
+          <stop offset="100%" stop-color="#7A2C04"/>
         </radialGradient>
-        <radialGradient id="rg-o" cx="32%" cy="28%" r="65%">
-          <stop offset="0%"   stop-color="#F07828"/>
-          <stop offset="55%"  stop-color="#C04812"/>
-          <stop offset="100%" stop-color="#7A2808"/>
+        <radialGradient id="rg-g" cx="30%" cy="25%" r="68%">
+          <stop offset="0%"   stop-color="#8AEA4A"/>
+          <stop offset="35%"  stop-color="#48AA20"/>
+          <stop offset="70%"  stop-color="#286810"/>
+          <stop offset="100%" stop-color="#143808"/>
         </radialGradient>
+        <!-- Filters -->
+        <filter id="f-leaf" x="-8%" y="-8%" width="120%" height="120%">
+          <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="rgba(5,20,2,0.38)"/>
+        </filter>
+        <filter id="f-berry">
+          <feDropShadow dx="1" dy="2" stdDeviation="2.5" flood-color="rgba(0,0,0,0.45)"/>
+        </filter>
+        <filter id="f-branch">
+          <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.28)"/>
+        </filter>
       </defs>
 
-      <!-- ══ ГЛАВНАЯ ВЕТКА — горизонтально, от правого края ══ -->
+      <!-- ════ ГЛАВНАЯ ВЕТКА ════ -->
+      <!-- Тень под веткой -->
+      <path d="M822 218 C800 215 768 210 735 206 C700 202 663 196 628 192 C590 188 552 183 514 179 C476 175 437 171 397 168 C356 165 313 162 270 159 C232 157 193 155 155 153 C120 151 85 150 50 149"
+        fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="16" stroke-linecap="round" filter="url(#f-branch)"/>
+      <!-- Нижняя темная сторона коры -->
+      <path d="M822 214 C800 211 768 206 735 202 C700 198 663 192 628 188 C590 184 552 179 514 175 C476 171 437 167 397 164 C356 161 313 158 270 155 C232 153 193 151 155 149 C120 147 85 146 50 145"
+        fill="none" stroke="#3A1E08" stroke-width="12" stroke-linecap="round" pathLength="1" class="la-stem"/>
+      <!-- Основная кора -->
       <path d="M822 210 C800 207 768 202 735 198 C700 194 663 188 628 184 C590 180 552 175 514 171 C476 167 437 163 397 160 C356 157 313 154 270 151 C232 149 193 147 155 145 C120 143 85 142 50 141"
-        fill="none" stroke="url(#lg-bark)" stroke-width="10" stroke-linecap="round" pathLength="1" class="la-stem"/>
-      <!-- Концевая тонкая часть -->
-      <path d="M50 141 C32 140 16 140 0 139"
-        fill="none" stroke="#7A4A22" stroke-width="5.5" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:2.6s"/>
+        fill="none" stroke="url(#lg-bark)" stroke-width="9" stroke-linecap="round" pathLength="1" class="la-stem"/>
+      <!-- Бликовая полоса сверху коры -->
+      <path d="M822 207 C800 204 768 199 735 195 C700 191 650 184 600 180 C548 176 496 171 440 167 C380 163 315 159 250 156 C195 153 140 150 90 148"
+        fill="none" stroke="rgba(210,160,90,0.3)" stroke-width="3" stroke-linecap="round" pathLength="1" class="la-stem"/>
 
-      <!-- ══ УЗЕЛ 1 — правый (~700, 192) ══ -->
-      <path d="M698 192 C690 178 678 162 660 150"
-        fill="none" stroke="#5C3218" stroke-width="2.8" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:.65s"/>
-      <path d="M706 196 C714 212 726 230 742 244"
-        fill="none" stroke="#5C3218" stroke-width="2.8" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:.7s"/>
-      <!-- Верхний лист, узел 1 — крупный, уходит влево-вверх -->
-      <path d="M660 150 C646 133 622 118 592 113 C562 108 534 116 520 134 C507 150 512 168 530 176 C552 186 586 180 616 170 C642 161 657 156 660 150Z"
-        fill="url(#lg-a)" stroke="#163808" stroke-width="1.3" class="la-leaf" style="--d:.82s"/>
-      <!-- Средняя жилка -->
-      <path d="M660 150 C640 138 614 126 584 118 C560 112 534 118 520 136"
-        fill="none" stroke="rgba(255,255,255,0.24)" stroke-width="1.6" stroke-linecap="round" class="la-leaf" style="--d:.96s"/>
-      <!-- Боковые жилки верхнего листа -->
-      <path d="M642 134 C634 124 618 117 602 115" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:1.02s"/>
-      <path d="M622 126 C612 116 596 112 580 112" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:1.05s"/>
-      <path d="M600 120 C590 112 574 110 558 112" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:1.08s"/>
-      <path d="M576 118 C566 112 550 112 538 116" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:1.11s"/>
-      <path d="M552 120 C542 116 530 118 522 126" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:1.14s"/>
-      <!-- Блеск на листе -->
-      <path d="M648 138 C632 126 608 116 580 113"
-        fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="8" stroke-linecap="round" class="la-leaf" style="--d:1.0s"/>
-      <!-- Нижний лист, узел 1 — вниз -->
-      <path d="M742 244 C758 262 772 286 770 312 C768 338 752 354 732 350 C712 346 698 328 700 304 C702 278 718 254 738 242 C740 240 742 242 742 244Z"
-        fill="url(#lg-b)" stroke="#163808" stroke-width="1.3" class="la-leaf" style="--d:.88s"/>
-      <!-- Средняя жилка нижнего листа -->
-      <path d="M742 244 C754 264 764 290 760 318 C756 340 744 352 730 350"
-        fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" stroke-linecap="round" class="la-leaf" style="--d:1.0s"/>
-      <!-- Боковые жилки нижнего листа -->
-      <path d="M748 264 C758 262 766 268 770 278" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:1.06s"/>
-      <path d="M752 284 C762 282 768 288 770 298" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:1.09s"/>
-      <path d="M750 304 C760 304 764 310 764 320" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:1.12s"/>
-      <!-- Ягоды узел 1 -->
-      <circle cx="697" cy="191" r="9.5" fill="url(#rg-r)" class="la-berry" style="--d:1.3s"/>
-      <circle cx="710" cy="185" r="9"   fill="url(#rg-c)" class="la-berry" style="--d:1.38s"/>
-      <circle cx="686" cy="183" r="8.5" fill="url(#rg-o)" class="la-berry" style="--d:1.44s"/>
-      <circle cx="700" cy="178" r="8"   fill="url(#rg-g)" class="la-berry" style="--d:1.5s"/>
-      <circle cx="688" cy="188" r="2.6" fill="rgba(255,255,255,0.52)" class="la-berry" style="--d:1.54s"/>
-      <circle cx="704" cy="181" r="2.4" fill="rgba(255,255,255,0.48)" class="la-berry" style="--d:1.57s"/>
+      <!-- ════ УЗЕЛ 1 — правый (~700, 192) ════ -->
+      <!-- Черешки -->
+      <path d="M697 192 C689 179 677 163 660 151"
+        fill="none" stroke="#6A4020" stroke-width="3.2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:.6s"/>
+      <path d="M705 196 C713 213 726 233 742 249"
+        fill="none" stroke="#6A4020" stroke-width="3.2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:.65s"/>
 
-      <!-- ══ УЗЕЛ 2 — (~544, 172) ══ -->
-      <path d="M542 172 C530 156 512 140 490 132"
-        fill="none" stroke="#5C3218" stroke-width="2.5" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:1.62s"/>
-      <path d="M548 175 C556 192 568 212 584 228"
-        fill="none" stroke="#5C3218" stroke-width="2.5" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:1.67s"/>
-      <!-- Верхний лист узел 2 -->
-      <path d="M490 132 C474 114 448 100 418 96 C388 92 360 102 346 122 C333 140 338 160 358 168 C382 178 418 170 448 158 C474 148 488 140 490 132Z"
-        fill="url(#lg-c)" stroke="#163808" stroke-width="1.2" class="la-leaf" style="--d:1.78s"/>
-      <!-- Средняя жилка -->
-      <path d="M490 132 C470 118 444 106 414 100 C388 96 362 106 348 126"
-        fill="none" stroke="rgba(255,255,255,0.24)" stroke-width="1.5" stroke-linecap="round" class="la-leaf" style="--d:1.9s"/>
-      <!-- Боковые жилки -->
-      <path d="M472 116 C462 106 446 100 430 98" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:1.95s"/>
-      <path d="M450 108 C438 100 422 96 406 98"  fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:1.98s"/>
-      <path d="M428 104 C416 98 400 98 388 104"  fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:2.01s"/>
-      <path d="M404 104 C392 100 378 104 368 114" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:2.04s"/>
-      <!-- Блеск -->
-      <path d="M478 120 C460 108 436 100 408 97"
-        fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="9" stroke-linecap="round" class="la-leaf" style="--d:1.92s"/>
-      <!-- Нижний лист узел 2 -->
-      <path d="M584 228 C598 244 612 268 608 294 C604 320 588 336 570 332 C552 328 540 310 542 286 C544 262 558 238 578 226 C580 224 584 226 584 228Z"
-        fill="url(#lg-a)" stroke="#163808" stroke-width="1.2" class="la-leaf" style="--d:1.82s"/>
-      <!-- Средняя жилка нижний лист 2 -->
-      <path d="M584 228 C596 246 606 272 602 298 C598 320 586 334 572 332"
-        fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.4" stroke-linecap="round" class="la-leaf" style="--d:1.95s"/>
-      <!-- Боковые жилки нижний лист 2 -->
-      <path d="M590 248 C600 248 607 254 610 264" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.0s"/>
-      <path d="M594 268 C604 266 610 272 612 282" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.03s"/>
-      <path d="M592 288 C602 288 606 295 606 305" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.06s"/>
-      <!-- Ягоды узел 2 -->
-      <circle cx="541" cy="171" r="9"   fill="url(#rg-r)" class="la-berry" style="--d:2.2s"/>
-      <circle cx="554" cy="165" r="8.5" fill="url(#rg-r)" class="la-berry" style="--d:2.27s"/>
-      <circle cx="530" cy="163" r="8"   fill="url(#rg-c)" class="la-berry" style="--d:2.33s"/>
-      <circle cx="543" cy="158" r="7.5" fill="url(#rg-g)" class="la-berry" style="--d:2.39s"/>
-      <circle cx="532" cy="168" r="2.4" fill="rgba(255,255,255,0.5)"  class="la-berry" style="--d:2.43s"/>
-      <circle cx="547" cy="161" r="2.2" fill="rgba(255,255,255,0.46)" class="la-berry" style="--d:2.46s"/>
+      <!-- Верхний лист (узел 1) — крупный, Coffea arabica форма -->
+      <path d="M660 151 C648 135 626 119 596 113 C566 107 536 115 521 133 C507 150 512 170 532 178 C556 188 590 181 618 170 C643 160 658 156 660 151Z"
+        fill="url(#lg-a)" stroke="#122E06" stroke-width="1.4" filter="url(#f-leaf)" class="la-leaf" style="--d:.78s"/>
+      <!-- Нижняя подсветка края -->
+      <path d="M658 155 C644 164 624 172 600 178 C578 183 558 183 540 177"
+        fill="none" stroke="rgba(90,180,45,0.18)" stroke-width="6" stroke-linecap="round" class="la-leaf" style="--d:.85s"/>
+      <!-- Средняя жилка — желтовато-зелёная, как у настоящего листа -->
+      <path d="M660 151 C642 139 616 126 588 119 C562 113 536 119 521 136"
+        fill="none" stroke="#7DBF38" stroke-width="2.1" stroke-linecap="round" class="la-leaf" style="--d:.94s"/>
+      <path d="M658 149 C640 137 614 124 586 117"
+        fill="none" stroke="rgba(240,255,200,0.16)" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:.95s"/>
+      <!-- Боковые жилки (5 пар) -->
+      <path d="M644 135 C637 126 622 119 607 117" fill="none" stroke="#5A9E2A" stroke-width="1.25" stroke-linecap="round" class="la-leaf" style="--d:1.0s"/>
+      <path d="M625 127 C617 117 601 112 585 112" fill="none" stroke="#5A9E2A" stroke-width="1.25" stroke-linecap="round" class="la-leaf" style="--d:1.03s"/>
+      <path d="M604 120 C595 112 578 109 562 111" fill="none" stroke="#5A9E2A" stroke-width="1.25" stroke-linecap="round" class="la-leaf" style="--d:1.06s"/>
+      <path d="M580 117 C570 111 553 111 541 117" fill="none" stroke="#5A9E2A" stroke-width="1.25" stroke-linecap="round" class="la-leaf" style="--d:1.09s"/>
+      <path d="M554 119 C545 115 533 118 525 126" fill="none" stroke="#5A9E2A" stroke-width="1.25" stroke-linecap="round" class="la-leaf" style="--d:1.12s"/>
+      <!-- Глянцевый блик -->
+      <path d="M650 139 C634 128 610 117 582 114 C560 112 540 118 530 130"
+        fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="11" stroke-linecap="round" class="la-leaf" style="--d:.96s"/>
 
-      <!-- ══ УЗЕЛ 3 — (~390, 160) ══ -->
-      <path d="M388 160 C374 144 352 128 328 120"
-        fill="none" stroke="#5C3218" stroke-width="2.2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:2.5s"/>
-      <path d="M394 163 C404 180 418 200 434 216"
-        fill="none" stroke="#5C3218" stroke-width="2.2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:2.55s"/>
-      <!-- Верхний лист узел 3 -->
-      <path d="M328 120 C312 102 286 90 256 88 C226 86 200 98 188 118 C177 136 184 156 204 162 C228 170 262 162 290 150 C314 140 328 130 328 120Z"
-        fill="url(#lg-b)" stroke="#163808" stroke-width="1.1" class="la-leaf" style="--d:2.68s"/>
-      <!-- Средняя жилка -->
-      <path d="M328 120 C308 106 280 94 252 90 C226 88 200 100 188 120"
-        fill="none" stroke="rgba(255,255,255,0.23)" stroke-width="1.4" stroke-linecap="round" class="la-leaf" style="--d:2.8s"/>
-      <!-- Боковые жилки -->
-      <path d="M310 104 C298 96 282 90 266 90"  fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.84s"/>
-      <path d="M288 96 C276 90 260 88 246 92"   fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.87s"/>
-      <path d="M266 92 C254 88 238 90 228 98"   fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.90s"/>
-      <path d="M244 94 C232 92 218 98 210 110"  fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.93s"/>
-      <!-- Нижний лист узел 3 -->
-      <path d="M434 216 C448 232 460 256 456 280 C452 304 436 318 418 314 C400 310 390 292 394 268 C398 244 414 220 432 214 C433 213 434 215 434 216Z"
-        fill="url(#lg-c)" stroke="#163808" stroke-width="1.1" class="la-leaf" style="--d:2.72s"/>
-      <!-- Средняя жилка нижний лист 3 -->
-      <path d="M434 216 C446 234 454 260 450 286 C446 308 434 318 420 314"
-        fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.3" stroke-linecap="round" class="la-leaf" style="--d:2.84s"/>
-      <!-- Боковые жилки -->
-      <path d="M440 236 C450 236 457 242 460 252" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.88s"/>
-      <path d="M444 256 C454 254 460 260 462 270" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-linecap="round" class="la-leaf" style="--d:2.91s"/>
-      <!-- Ягоды узел 3 -->
-      <circle cx="387" cy="159" r="8.5" fill="url(#rg-r)" class="la-berry" style="--d:3.05s"/>
-      <circle cx="399" cy="153" r="8"   fill="url(#rg-o)" class="la-berry" style="--d:3.12s"/>
-      <circle cx="376" cy="152" r="7.5" fill="url(#rg-c)" class="la-berry" style="--d:3.18s"/>
-      <circle cx="378" cy="157" r="2.2" fill="rgba(255,255,255,0.5)" class="la-berry" style="--d:3.22s"/>
+      <!-- Нижний лист (узел 1) -->
+      <path d="M742 249 C759 268 773 294 771 322 C769 350 752 366 730 360 C708 354 694 332 697 306 C700 278 718 254 738 245 C740 243 742 247 742 249Z"
+        fill="url(#lg-b)" stroke="#122E06" stroke-width="1.4" filter="url(#f-leaf)" class="la-leaf" style="--d:.84s"/>
+      <path d="M742 249 C756 270 766 298 762 328 C758 352 744 364 728 360"
+        fill="none" stroke="#7DBF38" stroke-width="1.9" stroke-linecap="round" class="la-leaf" style="--d:.98s"/>
+      <path d="M749 270 C759 268 767 275 771 285" fill="none" stroke="#5A9E2A" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:1.04s"/>
+      <path d="M753 292 C763 290 769 297 771 309" fill="none" stroke="#5A9E2A" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:1.07s"/>
+      <path d="M751 314 C761 314 765 322 765 334" fill="none" stroke="#5A9E2A" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:1.10s"/>
+      <path d="M736 252 C748 274 756 304 752 334 C748 355 738 365 726 360"
+        fill="none" stroke="rgba(255,255,255,0.11)" stroke-width="9" stroke-linecap="round" class="la-leaf" style="--d:1.0s"/>
 
-      <!-- ══ УЗЕЛ 4 — (~235, 150) ══ -->
-      <path d="M233 150 C218 135 196 120 172 114"
-        fill="none" stroke="#6B4A28" stroke-width="2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:3.26s"/>
-      <path d="M239 153 C249 168 262 188 276 204"
-        fill="none" stroke="#6B4A28" stroke-width="2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:3.31s"/>
-      <!-- Верхний лист узел 4 -->
-      <path d="M172 114 C156 98 130 88 100 88 C72 88 50 100 42 120 C34 138 44 156 64 162 C88 170 124 160 152 146 C168 138 174 126 172 114Z"
-        fill="url(#lg-a)" stroke="#163808" stroke-width="1" class="la-leaf" style="--d:3.42s"/>
-      <!-- Средняя жилка -->
-      <path d="M172 114 C152 100 124 90 96 90 C72 90 50 104 44 124"
-        fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.3" stroke-linecap="round" class="la-leaf" style="--d:3.54s"/>
-      <!-- Боковые жилки -->
-      <path d="M154 100 C142 92 126 88 110 90"  fill="none" stroke="rgba(255,255,255,0.12)" stroke-width=".9" stroke-linecap="round" class="la-leaf" style="--d:3.57s"/>
-      <path d="M132 94 C118 88 102 88 90 96"    fill="none" stroke="rgba(255,255,255,0.12)" stroke-width=".9" stroke-linecap="round" class="la-leaf" style="--d:3.60s"/>
-      <path d="M108 92 C96 90 80 96 70 108"     fill="none" stroke="rgba(255,255,255,0.12)" stroke-width=".9" stroke-linecap="round" class="la-leaf" style="--d:3.63s"/>
-      <!-- Нижний лист узел 4 (поменьше) -->
-      <path d="M276 204 C290 220 300 242 296 264 C292 284 278 296 262 290 C246 284 238 266 242 244 C246 222 260 204 276 202 C276 202 276 203 276 204Z"
-        fill="url(#lg-b)" stroke="#163808" stroke-width="1" class="la-leaf" style="--d:3.45s"/>
-      <!-- Средняя жилка нижний лист 4 -->
-      <path d="M276 204 C288 222 294 246 290 268 C286 286 276 294 264 290"
-        fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:3.56s"/>
-      <!-- Ягоды узел 4 -->
-      <circle cx="232" cy="149" r="8"   fill="url(#rg-r)" class="la-berry" style="--d:3.7s"/>
-      <circle cx="243" cy="143" r="7.5" fill="url(#rg-r)" class="la-berry" style="--d:3.76s"/>
-      <circle cx="222" cy="142" r="7"   fill="url(#rg-g)" class="la-berry" style="--d:3.82s"/>
-      <circle cx="224" cy="147" r="2"   fill="rgba(255,255,255,0.48)" class="la-berry" style="--d:3.86s"/>
+      <!-- Ягоды (узел 1) -->
+      <circle cx="696" cy="191" r="10.5" fill="url(#rg-r)"  filter="url(#f-berry)" class="la-berry" style="--d:1.28s"/>
+      <circle cx="710" cy="184" r="10"   fill="url(#rg-dr)" filter="url(#f-berry)" class="la-berry" style="--d:1.35s"/>
+      <circle cx="684" cy="182" r="9.5"  fill="url(#rg-o)"  filter="url(#f-berry)" class="la-berry" style="--d:1.42s"/>
+      <circle cx="699" cy="176" r="9"    fill="url(#rg-g)"  filter="url(#f-berry)" class="la-berry" style="--d:1.48s"/>
+      <!-- Ямки на ягодах -->
+      <circle cx="699" cy="183" r="2.4"  fill="rgba(80,30,10,0.65)" class="la-berry" style="--d:1.52s"/>
+      <circle cx="713" cy="176" r="2.2"  fill="rgba(80,30,10,0.6)"  class="la-berry" style="--d:1.55s"/>
+      <circle cx="687" cy="174" r="2.0"  fill="rgba(80,30,10,0.58)" class="la-berry" style="--d:1.57s"/>
+      <!-- Блики на ягодах -->
+      <circle cx="690" cy="184" r="3.5"  fill="rgba(255,255,255,0.54)" class="la-berry" style="--d:1.53s"/>
+      <circle cx="704" cy="177" r="3.2"  fill="rgba(255,255,255,0.50)" class="la-berry" style="--d:1.56s"/>
+      <circle cx="678" cy="176" r="2.8"  fill="rgba(255,255,255,0.46)" class="la-berry" style="--d:1.59s"/>
+      <circle cx="693" cy="170" r="2.6"  fill="rgba(255,255,255,0.42)" class="la-berry" style="--d:1.62s"/>
 
-      <!-- ══ КОНЧИК ВЕТКИ — молодой прирост ══ -->
-      <path d="M50 141 C34 130 18 120 2 112"
-        fill="none" stroke="#7A5030" stroke-width="1.8" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:3.9s"/>
-      <!-- Маленький верхний листочек -->
-      <path d="M2 112 C-12 98 -32 90 -52 92 C-68 94 -76 108 -68 120 C-58 134 -34 136 -8 130 C6 126 6 118 2 112Z"
-        fill="url(#lg-c)" stroke="#163808" stroke-width=".9" class="la-leaf" style="--d:4.0s"/>
-      <!-- Маленький нижний листочек кончика -->
-      <path d="M50 141 C60 156 68 176 62 196 C56 214 44 222 32 216 C20 210 14 196 20 178 C26 162 40 146 52 140 C52 140 50 140 50 141Z"
-        fill="url(#lg-a)" stroke="#163808" stroke-width=".9" class="la-leaf" style="--d:4.04s"/>
-      <!-- Белые цветы Coffea arabica на кончике -->
-      <circle cx="2"   cy="102" r="6"   fill="rgba(255,252,245,0.95)" class="la-berry" style="--d:4.14s"/>
-      <circle cx="-8"  cy="96"  r="4.5" fill="rgba(255,252,245,0.85)" class="la-berry" style="--d:4.2s"/>
-      <circle cx="12"  cy="94"  r="4"   fill="rgba(255,252,245,0.8)"  class="la-berry" style="--d:4.25s"/>
+      <!-- ════ УЗЕЛ 2 — (~544, 172) ════ -->
+      <path d="M541 172 C529 156 513 141 490 133"
+        fill="none" stroke="#6A4020" stroke-width="2.8" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:1.6s"/>
+      <path d="M547 175 C556 193 569 215 585 232"
+        fill="none" stroke="#6A4020" stroke-width="2.8" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:1.65s"/>
+
+      <!-- Верхний лист (узел 2) -->
+      <path d="M490 133 C474 115 448 100 418 96 C388 92 360 103 346 124 C333 143 339 163 360 171 C384 181 420 172 450 159 C474 149 488 141 490 133Z"
+        fill="url(#lg-c)" stroke="#122E06" stroke-width="1.3" filter="url(#f-leaf)" class="la-leaf" style="--d:1.75s"/>
+      <path d="M490 133 C470 118 444 105 414 100 C386 96 360 108 347 128"
+        fill="none" stroke="#7DBF38" stroke-width="2.0" stroke-linecap="round" class="la-leaf" style="--d:1.87s"/>
+      <path d="M473 117 C463 107 447 101 431 99"  fill="none" stroke="#5A9E2A" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:1.92s"/>
+      <path d="M451 109 C439 101 423 97 407 99"   fill="none" stroke="#5A9E2A" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:1.95s"/>
+      <path d="M429 104 C417 98 401 98 389 105"   fill="none" stroke="#5A9E2A" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:1.98s"/>
+      <path d="M406 105 C394 100 379 104 369 115"  fill="none" stroke="#5A9E2A" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:2.01s"/>
+      <path d="M382 110 C371 107 359 113 353 125"  fill="none" stroke="#5A9E2A" stroke-width="1.2" stroke-linecap="round" class="la-leaf" style="--d:2.04s"/>
+      <path d="M478 119 C460 107 436 99 408 97 C384 96 361 107 349 128"
+        fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="11" stroke-linecap="round" class="la-leaf" style="--d:1.89s"/>
+
+      <!-- Нижний лист (узел 2) -->
+      <path d="M585 232 C599 250 613 276 609 304 C605 332 587 348 567 342 C547 336 535 314 539 288 C543 260 559 237 579 228 C581 226 585 230 585 232Z"
+        fill="url(#lg-a)" stroke="#122E06" stroke-width="1.3" filter="url(#f-leaf)" class="la-leaf" style="--d:1.79s"/>
+      <path d="M585 232 C597 253 607 281 603 310 C599 333 586 345 570 341"
+        fill="none" stroke="#7DBF38" stroke-width="1.8" stroke-linecap="round" class="la-leaf" style="--d:1.92s"/>
+      <path d="M591 254 C601 252 608 260 611 271" fill="none" stroke="#5A9E2A" stroke-width="1.15" stroke-linecap="round" class="la-leaf" style="--d:1.97s"/>
+      <path d="M595 275 C605 273 611 281 613 293" fill="none" stroke="#5A9E2A" stroke-width="1.15" stroke-linecap="round" class="la-leaf" style="--d:2.00s"/>
+      <path d="M593 297 C603 297 607 306 607 318" fill="none" stroke="#5A9E2A" stroke-width="1.15" stroke-linecap="round" class="la-leaf" style="--d:2.03s"/>
+      <path d="M581 235 C593 257 601 285 597 315 C593 337 582 347 569 341"
+        fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="9" stroke-linecap="round" class="la-leaf" style="--d:1.94s"/>
+
+      <!-- Ягоды (узел 2) -->
+      <circle cx="539" cy="171" r="10"  fill="url(#rg-r)"  filter="url(#f-berry)" class="la-berry" style="--d:2.18s"/>
+      <circle cx="553" cy="164" r="9.5" fill="url(#rg-r)"  filter="url(#f-berry)" class="la-berry" style="--d:2.25s"/>
+      <circle cx="527" cy="162" r="9"   fill="url(#rg-dr)" filter="url(#f-berry)" class="la-berry" style="--d:2.31s"/>
+      <circle cx="541" cy="157" r="8.5" fill="url(#rg-g)"  filter="url(#f-berry)" class="la-berry" style="--d:2.37s"/>
+      <circle cx="541" cy="163" r="2.3" fill="rgba(80,30,10,0.62)" class="la-berry" style="--d:2.41s"/>
+      <circle cx="556" cy="156" r="2.1" fill="rgba(80,30,10,0.58)" class="la-berry" style="--d:2.44s"/>
+      <circle cx="533" cy="154" r="3.2" fill="rgba(255,255,255,0.50)" class="la-berry" style="--d:2.42s"/>
+      <circle cx="547" cy="149" r="2.8" fill="rgba(255,255,255,0.46)" class="la-berry" style="--d:2.45s"/>
+
+      <!-- ════ УЗЕЛ 3 — (~388, 160) ════ -->
+      <path d="M386 160 C374 145 356 130 331 122"
+        fill="none" stroke="#6A4020" stroke-width="2.5" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:2.48s"/>
+      <path d="M392 163 C403 181 417 203 433 220"
+        fill="none" stroke="#6A4020" stroke-width="2.5" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:2.53s"/>
+
+      <!-- Верхний лист (узел 3) -->
+      <path d="M331 122 C315 103 288 91 258 89 C228 87 201 99 189 121 C178 141 186 162 207 168 C232 176 268 167 296 154 C320 143 331 132 331 122Z"
+        fill="url(#lg-b)" stroke="#122E06" stroke-width="1.2" filter="url(#f-leaf)" class="la-leaf" style="--d:2.65s"/>
+      <path d="M331 122 C311 107 284 94 254 90 C226 88 200 102 189 124"
+        fill="none" stroke="#7DBF38" stroke-width="1.9" stroke-linecap="round" class="la-leaf" style="--d:2.77s"/>
+      <path d="M314 106 C304 97 289 91 274 91"  fill="none" stroke="#5A9E2A" stroke-width="1.15" stroke-linecap="round" class="la-leaf" style="--d:2.81s"/>
+      <path d="M292 98 C280 91 264 89 250 94"   fill="none" stroke="#5A9E2A" stroke-width="1.15" stroke-linecap="round" class="la-leaf" style="--d:2.84s"/>
+      <path d="M268 94 C256 89 240 91 229 100"  fill="none" stroke="#5A9E2A" stroke-width="1.15" stroke-linecap="round" class="la-leaf" style="--d:2.87s"/>
+      <path d="M244 96 C232 93 217 100 209 113" fill="none" stroke="#5A9E2A" stroke-width="1.15" stroke-linecap="round" class="la-leaf" style="--d:2.90s"/>
+      <path d="M318 108 C300 96 276 89 250 90 C226 90 204 103 192 125"
+        fill="none" stroke="rgba(255,255,255,0.11)" stroke-width="10" stroke-linecap="round" class="la-leaf" style="--d:2.79s"/>
+
+      <!-- Нижний лист (узел 3) -->
+      <path d="M433 220 C447 238 460 263 456 289 C452 315 435 329 416 323 C397 317 387 297 391 272 C395 246 412 222 431 216 C432 215 433 219 433 220Z"
+        fill="url(#lg-c)" stroke="#122E06" stroke-width="1.2" filter="url(#f-leaf)" class="la-leaf" style="--d:2.69s"/>
+      <path d="M433 220 C445 240 453 267 449 295 C445 317 433 327 417 323"
+        fill="none" stroke="#7DBF38" stroke-width="1.7" stroke-linecap="round" class="la-leaf" style="--d:2.81s"/>
+      <path d="M439 241 C449 241 456 248 459 259" fill="none" stroke="#5A9E2A" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:2.85s"/>
+      <path d="M443 262 C453 260 459 268 461 279" fill="none" stroke="#5A9E2A" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:2.88s"/>
+      <path d="M441 283 C451 283 455 291 453 302" fill="none" stroke="#5A9E2A" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:2.91s"/>
+
+      <!-- Ягоды (узел 3) -->
+      <circle cx="384" cy="159" r="9.5" fill="url(#rg-r)"  filter="url(#f-berry)" class="la-berry" style="--d:3.03s"/>
+      <circle cx="397" cy="152" r="9"   fill="url(#rg-o)"  filter="url(#f-berry)" class="la-berry" style="--d:3.10s"/>
+      <circle cx="373" cy="151" r="8.5" fill="url(#rg-dr)" filter="url(#f-berry)" class="la-berry" style="--d:3.17s"/>
+      <circle cx="376" cy="156" r="2.2" fill="rgba(80,30,10,0.62)" class="la-berry" style="--d:3.21s"/>
+      <circle cx="378" cy="144" r="2.9" fill="rgba(255,255,255,0.48)" class="la-berry" style="--d:3.22s"/>
+      <circle cx="391" cy="144" r="2.6" fill="rgba(255,255,255,0.44)" class="la-berry" style="--d:3.25s"/>
+
+      <!-- ════ УЗЕЛ 4 — (~233, 150) ════ -->
+      <path d="M231 150 C217 136 199 122 176 116"
+        fill="none" stroke="#6B4A28" stroke-width="2.2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:3.24s"/>
+      <path d="M237 153 C248 171 262 193 277 210"
+        fill="none" stroke="#6B4A28" stroke-width="2.2" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:3.29s"/>
+
+      <!-- Верхний лист (узел 4) -->
+      <path d="M176 116 C160 98 135 88 105 88 C77 88 55 102 47 124 C39 144 50 163 71 168 C95 175 131 164 160 149 C174 141 178 128 176 116Z"
+        fill="url(#lg-a)" stroke="#122E06" stroke-width="1.1" filter="url(#f-leaf)" class="la-leaf" style="--d:3.39s"/>
+      <path d="M176 116 C156 102 128 90 100 90 C74 90 52 106 46 128"
+        fill="none" stroke="#7DBF38" stroke-width="1.7" stroke-linecap="round" class="la-leaf" style="--d:3.51s"/>
+      <path d="M158 102 C146 94 130 89 115 90" fill="none" stroke="#5A9E2A" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:3.54s"/>
+      <path d="M136 96 C122 90 106 90 93 98"   fill="none" stroke="#5A9E2A" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:3.57s"/>
+      <path d="M113 94 C100 92 85 98 75 111"   fill="none" stroke="#5A9E2A" stroke-width="1.1" stroke-linecap="round" class="la-leaf" style="--d:3.60s"/>
+      <path d="M164 104 C144 93 118 88 93 90 C72 92 52 107 46 130"
+        fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="9" stroke-linecap="round" class="la-leaf" style="--d:3.52s"/>
+
+      <!-- Нижний лист (узел 4) -->
+      <path d="M277 210 C291 228 302 252 298 276 C294 300 279 312 262 306 C245 300 236 280 240 256 C244 232 259 213 276 207 C277 206 277 209 277 210Z"
+        fill="url(#lg-b)" stroke="#122E06" stroke-width="1.1" filter="url(#f-leaf)" class="la-leaf" style="--d:3.42s"/>
+      <path d="M277 210 C289 230 296 256 292 280 C288 302 277 310 264 306"
+        fill="none" stroke="#7DBF38" stroke-width="1.5" stroke-linecap="round" class="la-leaf" style="--d:3.53s"/>
+      <path d="M283 231 C293 231 299 239 301 250" fill="none" stroke="#5A9E2A" stroke-width="1.0" stroke-linecap="round" class="la-leaf" style="--d:3.57s"/>
+      <path d="M286 252 C296 250 302 258 302 270" fill="none" stroke="#5A9E2A" stroke-width="1.0" stroke-linecap="round" class="la-leaf" style="--d:3.60s"/>
+
+      <!-- Ягоды (узел 4) -->
+      <circle cx="230" cy="149" r="9"   fill="url(#rg-r)"  filter="url(#f-berry)" class="la-berry" style="--d:3.68s"/>
+      <circle cx="242" cy="143" r="8.5" fill="url(#rg-dr)" filter="url(#f-berry)" class="la-berry" style="--d:3.74s"/>
+      <circle cx="220" cy="141" r="8"   fill="url(#rg-g)"  filter="url(#f-berry)" class="la-berry" style="--d:3.80s"/>
+      <circle cx="221" cy="146" r="2.1" fill="rgba(80,30,10,0.60)" class="la-berry" style="--d:3.83s"/>
+      <circle cx="224" cy="134" r="2.6" fill="rgba(255,255,255,0.48)" class="la-berry" style="--d:3.85s"/>
+
+      <!-- ════ КОНЧИК — молодой прирост ════ -->
+      <path d="M50 141 C35 131 19 121 3 113"
+        fill="none" stroke="#7A5030" stroke-width="2.0" stroke-linecap="round" pathLength="1" class="la-twig" style="--d:3.88s"/>
+
+      <!-- Маленький лист кончика (верхний) -->
+      <path d="M3 113 C-11 99 -31 93 -51 95 C-67 97 -75 111 -67 123 C-57 137 -32 139 -7 131 C7 125 7 117 3 113Z"
+        fill="url(#lg-c)" stroke="#122E06" stroke-width=".9" filter="url(#f-leaf)" class="la-leaf" style="--d:3.97s"/>
+      <path d="M3 113 C-13 103 -33 97 -53 99 C-67 101 -73 115 -65 125"
+        fill="none" stroke="#7DBF38" stroke-width="1.4" stroke-linecap="round" class="la-leaf" style="--d:4.07s"/>
+      <path d="M-12 100 C-22 96 -36 96 -46 103" fill="none" stroke="#5A9E2A" stroke-width=".9" stroke-linecap="round" class="la-leaf" style="--d:4.10s"/>
+      <path d="M-32 96 C-44 94 -56 100 -62 112" fill="none" stroke="#5A9E2A" stroke-width=".9" stroke-linecap="round" class="la-leaf" style="--d:4.12s"/>
+
+      <!-- Маленький лист кончика (нижний) -->
+      <path d="M50 141 C63 157 71 179 65 200 C59 219 45 227 31 220 C17 213 13 197 19 179 C25 161 40 147 52 140 C52 140 50 140 50 141Z"
+        fill="url(#lg-a)" stroke="#122E06" stroke-width=".9" filter="url(#f-leaf)" class="la-leaf" style="--d:4.01s"/>
+      <path d="M50 141 C61 159 65 182 61 203 C57 220 46 226 33 220"
+        fill="none" stroke="#7DBF38" stroke-width="1.3" stroke-linecap="round" class="la-leaf" style="--d:4.11s"/>
+      <path d="M56 162 C66 162 72 170 73 181" fill="none" stroke="#5A9E2A" stroke-width=".9" stroke-linecap="round" class="la-leaf" style="--d:4.14s"/>
+      <path d="M59 183 C69 182 74 190 73 202" fill="none" stroke="#5A9E2A" stroke-width=".9" stroke-linecap="round" class="la-leaf" style="--d:4.17s"/>
+
+      <!-- Цветы Coffea arabica (белые, с жёлтой серединой) -->
+      <circle cx="3"   cy="103" r="7.5" fill="rgba(255,253,244,0.96)" filter="url(#f-berry)" class="la-berry" style="--d:4.14s"/>
+      <circle cx="-8"  cy="96"  r="6"   fill="rgba(255,253,244,0.90)" filter="url(#f-berry)" class="la-berry" style="--d:4.20s"/>
+      <circle cx="13"  cy="94"  r="5.5" fill="rgba(255,253,244,0.84)" filter="url(#f-berry)" class="la-berry" style="--d:4.25s"/>
+      <!-- Жёлтые тычинки -->
+      <circle cx="3"   cy="103" r="2.8" fill="rgba(255,215,50,0.92)"  class="la-berry" style="--d:4.30s"/>
+      <circle cx="-8"  cy="96"  r="2.2" fill="rgba(255,215,50,0.86)"  class="la-berry" style="--d:4.34s"/>
+      <circle cx="13"  cy="94"  r="2.0" fill="rgba(255,215,50,0.82)"  class="la-berry" style="--d:4.38s"/>
     </svg>
   </div>
   <div class="hero-top">
@@ -1344,41 +1422,6 @@ button { border: none; cursor: pointer; font-family: inherit; }
 <!-- ATMOSPHERE -->
 <section class="atmosphere" id="atmosphere">
   <div class="container">
-    <div class="atm-text">
-      <span class="label reveal">Добро пожаловать в «Кофеин»</span>
-      <h2 class="atm-title reveal reveal-title">Найди свой угол.<br>Останься надолго.</h2>
-      <p class="atm-body reveal">
-        Мы открыли «Кофеин», чтобы у района было место, куда хочется возвращаться.<br><br>
-        Никаких ограничений по времени. Никаких косых взглядов, если ты просидел три часа над ноутбуком и взял только капучино.
-      </p>
-      <ul class="features-list">
-        <li class="reveal">
-          <span class="feat-icon sage">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5a10.5 10.5 0 0 1 15 0M7.5 13.5a7 7 0 0 1 9 0M10.5 16.5a3 3 0 0 1 3 0M12 20v.5"/></svg>
-          </span> Быстрый Wi-Fi — бесплатно
-        </li>
-        <li class="reveal">
-          <span class="feat-icon sand">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2L8 12L14 12L10 22"/></svg>
-          </span> Розетки у каждого столика
-        </li>
-        <li class="reveal">
-          <span class="feat-icon sage">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L3 12L12 21L21 12L12 3z"/></svg>
-          </span> Настольные игры — бери с полки
-        </li>
-        <li class="reveal">
-          <span class="feat-icon sand">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a6 6 0 1 0 .01 0M12 14v5M11 19l1 1.5 1-1.5"/></svg>
-          </span> Детский уголок (карандаши, раскраски)
-        </li>
-        <li class="reveal">
-          <span class="feat-icon sage">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          </span> Тихая зона для работы и встреч
-        </li>
-      </ul>
-    </div>
     <div class="atm-slider-wrap reveal">
       <div class="atm-slider" id="atmSlider">
         <div class="atm-slides" id="atmSlides">
@@ -1406,6 +1449,14 @@ button { border: none; cursor: pointer; font-family: inherit; }
         <button class="atm-nav-btn" id="atmPrev" aria-label="Назад">←</button>
         <button class="atm-nav-btn" id="atmNext" aria-label="Вперёд">→</button>
       </div>
+    </div>
+    <div class="atm-text">
+      <span class="label reveal">Добро пожаловать в «Кофеин»</span>
+      <h2 class="atm-title reveal reveal-title">Найди свой угол.<br>Останься надолго.</h2>
+      <p class="atm-body reveal">
+        Мы открыли «Кофеин», чтобы у района было место, куда хочется возвращаться.<br><br>
+        Никаких ограничений по времени. Никаких косых взглядов, если ты просидел три часа над ноутбуком и взял только капучино.
+      </p>
     </div>
   </div>
 </section>
