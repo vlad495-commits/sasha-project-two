@@ -260,31 +260,32 @@ button { border: none; cursor: pointer; font-family: inherit; }
 
 /* ── Hero botanical decor ── */
 .hero-decor {
-  position: absolute; right: 0; top: 50%;
-  transform: translateY(-54%);
-  width: clamp(320px, 46vw, 600px);
-  pointer-events: none; z-index: 1; overflow: visible;
+  /* Right panel, full hero height — branch always fits inside */
+  position: absolute; right: 0; top: 0; bottom: 0;
+  width: clamp(320px, 44vw, 560px);
+  pointer-events: none; z-index: 1;
+  display: flex; align-items: center;
+  /* Entrance: slide in from right + fade */
+  animation: branchSlideIn 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .hero-decor img {
   width: 100%; height: auto; display: block;
-  transform: scaleX(-1);
-  transform-origin: 88% 80%;
-  filter: drop-shadow(2px 10px 20px rgba(10,35,5,0.30));
-  animation:
-    branchAppear 2s cubic-bezier(0.22, 1, 0.36, 1) both,
-    botanicalSway 10s ease-in-out 2.2s infinite;
+  /* Flip around CENTER — stays inside container, no overflow */
+  transform-origin: center center;
+  filter: drop-shadow(2px 10px 24px rgba(5,20,2,0.32));
+  animation: botanicalSway 10s ease-in-out 2s infinite;
 }
-@keyframes branchAppear {
-  0%   { opacity: 0; transform: scaleX(-1) translateX(60px) rotate(-5deg); }
-  100% { opacity: 1; transform: scaleX(-1) translateX(0)    rotate(0deg); }
+@keyframes branchSlideIn {
+  0%   { opacity: 0; transform: translateX(60px); }
+  100% { opacity: 1; transform: translateX(0); }
 }
 @keyframes botanicalSway {
   0%,100% { transform: scaleX(-1) rotate(0deg); }
-  30%     { transform: scaleX(-1) rotate(2deg); }
-  65%     { transform: scaleX(-1) rotate(-1.2deg); }
-  85%     { transform: scaleX(-1) rotate(.6deg); }
+  30%     { transform: scaleX(-1) rotate(-2deg); }
+  65%     { transform: scaleX(-1) rotate(1.2deg); }
+  85%     { transform: scaleX(-1) rotate(-.6deg); }
 }
-@media (max-width: 1024px) { .hero-decor { opacity: .4; width: clamp(240px, 40vw, 440px); } }
+@media (max-width: 1024px) { .hero-decor { opacity: .45; width: clamp(260px, 38vw, 440px); } }
 @media (max-width: 768px)  { .hero-decor { display: none; } }
 
 .hero-content {
@@ -539,6 +540,27 @@ button { border: none; cursor: pointer; font-family: inherit; }
 .promos {
   padding: var(--pad-section) 0;
   background: var(--beige-warm);
+  position: relative;
+  overflow: hidden;
+}
+.promo-cup {
+  position: absolute;
+  bottom: -20px; right: clamp(20px, 6vw, 80px);
+  width: clamp(100px, 14vw, 180px);
+  opacity: .1;
+  pointer-events: none;
+}
+.steam-line {
+  transform-origin: bottom center;
+  animation: steamRise 3s ease-in-out infinite;
+}
+.steam-line:nth-child(2) { animation-delay: 1s; }
+.steam-line:nth-child(3) { animation-delay: 2s; }
+@keyframes steamRise {
+  0%   { opacity: 0;   transform: translateY(0)   scaleX(1); }
+  30%  { opacity: .9; }
+  70%  { opacity: .4; }
+  100% { opacity: 0;   transform: translateY(-40px) scaleX(1.4); }
 }
 .promos-header { text-align: center; margin-bottom: clamp(32px,5vw,56px); }
 .section-title {
@@ -1291,6 +1313,21 @@ button { border: none; cursor: pointer; font-family: inherit; }
 
 <!-- PROMOS -->
 <section class="promos" id="promos">
+  <svg class="promo-cup" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- пар -->
+    <path class="steam-line" d="M38 30 C34 22 42 14 38 6" stroke="#1E3320" stroke-width="3" stroke-linecap="round"/>
+    <path class="steam-line" d="M55 30 C51 22 59 14 55 6" stroke="#1E3320" stroke-width="3" stroke-linecap="round"/>
+    <path class="steam-line" d="M72 30 C68 22 76 14 72 6" stroke="#1E3320" stroke-width="3" stroke-linecap="round"/>
+    <!-- блюдце -->
+    <ellipse cx="60" cy="118" rx="46" ry="10" stroke="#1E3320" stroke-width="3"/>
+    <path d="M22 112 Q60 122 98 112" stroke="#1E3320" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <!-- чашка -->
+    <path d="M20 50 L28 108 Q60 116 92 108 L100 50 Z" stroke="#1E3320" stroke-width="3" stroke-linejoin="round" fill="none"/>
+    <!-- ручка -->
+    <path d="M100 62 Q118 62 118 78 Q118 94 100 94" stroke="#1E3320" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <!-- верх чашки -->
+    <ellipse cx="60" cy="50" rx="40" ry="9" stroke="#1E3320" stroke-width="3" fill="none"/>
+  </svg>
   <div class="container">
     <div class="promos-header">
       <span class="label">Для наших гостей</span>
