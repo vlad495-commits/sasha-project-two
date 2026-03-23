@@ -260,32 +260,32 @@ button { border: none; cursor: pointer; font-family: inherit; }
 
 /* ── Hero botanical decor ── */
 .hero-decor {
-  position: absolute; right: -3%; top: 50%;
-  transform: translateY(-50%);
-  width: clamp(300px, 50vw, 660px);
+  position: absolute; right: 0; top: 50%;
+  transform: translateY(-54%);
+  width: clamp(320px, 46vw, 600px);
   pointer-events: none; z-index: 1; overflow: visible;
 }
 .hero-decor img {
   width: 100%; height: auto; display: block;
-  transform: scaleX(-1);        /* flip: stem enters from right edge */
-  mix-blend-mode: multiply;     /* white bg disappears on beige site */
-  transform-origin: 90% 78%;   /* pivot = stem base (bottom-right after flip) */
-  filter: drop-shadow(3px 10px 22px rgba(10,35,5,0.26));
+  transform: scaleX(-1);
+  mix-blend-mode: multiply;
+  transform-origin: 88% 80%;
+  filter: drop-shadow(2px 8px 18px rgba(10,35,5,0.22));
   animation:
-    branchAppear 1.8s cubic-bezier(0.22, 1, 0.36, 1) both,
-    botanicalSway 10s ease-in-out 2.0s infinite;
+    branchAppear 2s cubic-bezier(0.22, 1, 0.36, 1) both,
+    botanicalSway 10s ease-in-out 2.2s infinite;
 }
 @keyframes branchAppear {
-  0%   { opacity: 0; transform: scaleX(-1) translateX(80px) rotate(-6deg); }
+  0%   { opacity: 0; transform: scaleX(-1) translateX(60px) rotate(-5deg); }
   100% { opacity: 1; transform: scaleX(-1) translateX(0)    rotate(0deg); }
 }
 @keyframes botanicalSway {
   0%,100% { transform: scaleX(-1) rotate(0deg); }
-  30%     { transform: scaleX(-1) rotate(2.4deg); }
-  65%     { transform: scaleX(-1) rotate(-1.4deg); }
-  85%     { transform: scaleX(-1) rotate(.8deg); }
+  30%     { transform: scaleX(-1) rotate(2deg); }
+  65%     { transform: scaleX(-1) rotate(-1.2deg); }
+  85%     { transform: scaleX(-1) rotate(.6deg); }
 }
-@media (max-width: 1024px) { .hero-decor { opacity: .4; width: clamp(240px, 44vw, 480px); } }
+@media (max-width: 1024px) { .hero-decor { opacity: .4; width: clamp(240px, 40vw, 440px); } }
 @media (max-width: 768px)  { .hero-decor { display: none; } }
 
 .hero-content {
@@ -588,71 +588,111 @@ button { border: none; cursor: pointer; font-family: inherit; }
 
 /* ─── ABOUT ─────────────────────────────────────────────────────── */
 .about {
+  background: var(--green);
+  color: var(--text-light);
   padding: var(--pad-section) 0;
-  background: var(--beige);
+  position: relative;
+  overflow: hidden;
 }
-.about .container {
-  display: grid; grid-template-columns: 1fr 1.1fr;
-  gap: clamp(32px,6vw,80px); align-items: start;
-}
-.about-photo-main {
-  border-radius: var(--radius); overflow: hidden;
-  aspect-ratio: 4/5;
-}
-.about-photo-main .photo-placeholder {
-  background: linear-gradient(135deg, #D4C5A8, #BFB096);
-  height: 100%;
-}
-.about-title {
+.about::before {
+  content: '2022';
+  position: absolute;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.75rem,4vw,2.75rem);
-  font-weight: 600; line-height: 1.2;
-  color: var(--text-dark); margin-bottom: 1.25rem;
+  font-size: clamp(160px, 28vw, 360px);
+  font-weight: 600;
+  color: rgba(255,255,255,.04);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 0;
+  letter-spacing: -.02em;
 }
-.about-body { color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; }
-.philosophy { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2rem; }
-.phil-item { display: flex; gap: 1rem; align-items: flex-start; }
-.phil-icon {
-  width: 52px; height: 52px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: .1rem;
+.about .container { display: block; position: relative; z-index: 1; }
+
+.about-pull {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto clamp(2.5rem,5vw,4rem);
+  padding-bottom: clamp(2rem,4vw,3.5rem);
+  border-bottom: 1px solid rgba(240,230,208,.12);
 }
-.phil-icon.sage { background: #6B7F5A; }
-.phil-icon.sand { background: #D0C4AB; }
-.phil-text { }
-.phil-title { font-weight: 500; color: var(--text-dark); margin-bottom: .25rem; }
-.phil-desc { font-size: .875rem; color: var(--text-muted); line-height: 1.6; }
-.amenities-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: .625rem; margin-bottom: 2rem;
-}
-.amenity {
-  display: flex; align-items: center; gap: .6rem;
-  font-size: .875rem; color: var(--text-dark);
-}
-.amenity-icon {
-  width: 34px; height: 34px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.amenity-icon.sage { background: #6B7F5A; }
-.amenity-icon.sand { background: #D0C4AB; }
-.about-quote {
-  border-left: 3px solid var(--terra);
-  padding-left: 1.25rem; margin-bottom: 2rem;
+.about-pull-text {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem; font-style: italic; font-weight: 400;
-  color: var(--text-dark); line-height: 1.6;
+  font-size: clamp(1.75rem,4vw,3rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--beige);
+  line-height: 1.3;
+  margin-bottom: 1.25rem;
 }
-.counters { display: flex; gap: 2rem; flex-wrap: wrap; }
-.counter-item { text-align: center; }
-.counter-num {
+.about-pull-body {
+  color: rgba(240,230,208,.6);
+  line-height: 1.8;
+  font-size: .95rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.about-principles {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid rgba(240,230,208,.12);
+}
+.about-principle {
+  padding: clamp(1.5rem,3vw,2.5rem) clamp(1.25rem,2.5vw,2.5rem);
+  border-right: 1px solid rgba(240,230,208,.12);
+}
+.about-principle:last-child { border-right: none; }
+.principle-num {
+  display: block;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem,5vw,3.5rem);
-  font-weight: 600; color: var(--terra);
-  display: block; line-height: 1;
+  font-size: clamp(3rem,6vw,5.5rem);
+  font-weight: 300;
+  color: var(--terra);
+  line-height: 1;
+  margin-bottom: .75rem;
+  opacity: .75;
 }
-.counter-label { font-size: .8rem; color: var(--text-muted); margin-top: .25rem; }
+.principle-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--beige);
+  margin-bottom: .4rem;
+  line-height: 1.3;
+}
+.principle-desc {
+  font-size: .85rem;
+  color: rgba(240,230,208,.55);
+  line-height: 1.7;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid rgba(240,230,208,.12);
+  text-align: center;
+}
+.about-stat {
+  padding: clamp(1.25rem,3vw,2rem) 1rem;
+  border-right: 1px solid rgba(240,230,208,.12);
+}
+.about-stat:last-child { border-right: none; }
+.stat-num {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem,4.5vw,3.5rem);
+  font-weight: 600;
+  color: var(--terra);
+  line-height: 1;
+}
+.stat-label {
+  font-size: .78rem;
+  color: rgba(240,230,208,.5);
+  margin-top: .35rem;
+  letter-spacing: .04em;
+}
 
 /* ─── GALLERY ───────────────────────────────────────────────────── */
 .gallery {
@@ -996,8 +1036,12 @@ button { border: none; cursor: pointer; font-family: inherit; }
   .booking .container { grid-template-columns: 1fr; }
   .contacts .container { grid-template-columns: 1fr; }
   .footer .container { grid-template-columns: 1fr 1fr; }
-  .about .container { grid-template-columns: 1fr; }
-  .about-photo-main { max-height: 340px; aspect-ratio: 16/9; }
+  .about-principles { grid-template-columns: 1fr; }
+  .about-principle { border-right: none; border-bottom: 1px solid rgba(240,230,208,.12); }
+  .about-principle:last-child { border-bottom: none; }
+  .about-stats { grid-template-columns: 1fr; }
+  .about-stat { border-right: none; border-bottom: 1px solid rgba(240,230,208,.12); }
+  .about-stat:last-child { border-bottom: none; }
 }
 @media (max-width: 768px) {
   .nav-links { display: none; }
@@ -1275,90 +1319,40 @@ button { border: none; cursor: pointer; font-family: inherit; }
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="container">
-    <div class="about-photo-main reveal">
-      <div class="photo-placeholder" style="height:100%;">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-        <span>Чашка кофе + ноутбук + цветок</span>
+    <div class="about-pull reveal">
+      <span class="label label--light">О нас</span>
+      <p class="about-pull-text">«Кофе перестаёт быть<br>просто напитком»</p>
+      <p class="about-pull-body">«Кофеин» открылся в 2022 году — чтобы в центре Москвы появился уютный островок. Мы не сеть и не франшиза. Здесь помнят любимые столики и спрашивают «как обычно?».</p>
+    </div>
+    <div class="about-principles">
+      <div class="about-principle reveal">
+        <span class="principle-num">01</span>
+        <div class="principle-title">Зерно от московских обжарщиков</div>
+        <p class="principle-desc">Работаем только с локальными обжарщиками. Свежая партия — каждые две недели.</p>
+      </div>
+      <div class="about-principle reveal">
+        <span class="principle-num">02</span>
+        <div class="principle-title">Десерты из собственной пекарни</div>
+        <p class="principle-desc">Чизкейк, круассаны, выпечка — готовим сами, каждый день.</p>
+      </div>
+      <div class="about-principle reveal">
+        <span class="principle-num">03</span>
+        <div class="principle-title">Ваш сосед, а не бариста</div>
+        <p class="principle-desc">Помним любимый столик. Спрашиваем «как обычно?».</p>
       </div>
     </div>
-    <div class="about-text">
-      <span class="label reveal">О нас</span>
-      <h2 class="about-title reveal reveal-title">Кофе перестаёт быть<br>просто напитком</h2>
-      <p class="about-body reveal">
-        «Кофеин» открылся в 2022 году — чтобы в центре Москвы появился уютный островок, где можно и продуктивно поработать, и душевно провести время.<br><br>
-        Мы не сеть и не франшиза. Здесь помнят любимые столики и спрашивают «как обычно?» — потому что каждый гость для нас сосед, а не транзакция.
-      </p>
-      <div class="philosophy">
-        <div class="phil-item reveal">
-          <div class="phil-icon sand">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3c0 1-1 1.5-1 2.5M10 3c0 1-1 1.5-1 2.5M14 3c0 1-1 1.5-1 2.5M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8zM17 8h1a4 4 0 0 1 0 8h-1"/></svg>
-          </div>
-          <div class="phil-text">
-            <div class="phil-title">Зерно от московских обжарщиков</div>
-            <div class="phil-desc">Работаем только с локальными обжарщиками. Свежая партия — каждые две недели.</div>
-          </div>
-        </div>
-        <div class="phil-item reveal">
-          <div class="phil-icon sage">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12 C14 10 16 10 16 12 C16 15 13 17 12 17 C9 17 7 15 7 12 C7 8 10 5 14 5 C19 5 21 9 21 12 C21 17 17 21 12 21 C7 21 3 17 3 12"/></svg>
-          </div>
-          <div class="phil-text">
-            <div class="phil-title">Десерты из собственной мини-пекарни</div>
-            <div class="phil-desc">Чизкейк, круассаны, выпечка — готовим сами, каждый день.</div>
-          </div>
-        </div>
-        <div class="phil-item reveal">
-          <div class="phil-icon sand">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 3L21 12V21H14V15H10V21H3V12z"/></svg>
-          </div>
-          <div class="phil-text">
-            <div class="phil-title">Ваш сосед, а не бариста</div>
-            <div class="phil-desc">Помним любимый столик. Спрашиваем «как обычно?».</div>
-          </div>
-        </div>
+    <div class="about-stats">
+      <div class="about-stat reveal">
+        <span class="stat-num">2022</span>
+        <div class="stat-label">Открылись в Москве</div>
       </div>
-      <div class="amenities-grid reveal">
-        <div class="amenity">
-          <span class="amenity-icon sage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5a10.5 10.5 0 0 1 15 0M7.5 13.5a7 7 0 0 1 9 0M10.5 16.5a3 3 0 0 1 3 0M12 20v.5"/></svg></span>
-          Быстрый Wi-Fi
-        </div>
-        <div class="amenity">
-          <span class="amenity-icon sand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2L8 12L14 12L10 22"/></svg></span>
-          Розетки у каждого стола
-        </div>
-        <div class="amenity">
-          <span class="amenity-icon sage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L3 12L12 21L21 12L12 3z"/></svg></span>
-          Шахматы, UNO, Манчкин
-        </div>
-        <div class="amenity">
-          <span class="amenity-icon sand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a6 6 0 1 0 .01 0M12 14v5M11 19l1 1.5 1-1.5"/></svg></span>
-          Детский уголок
-        </div>
-        <div class="amenity">
-          <span class="amenity-icon sage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
-          Зарядки iPhone / Android
-        </div>
-        <div class="amenity">
-          <span class="amenity-icon sand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A4A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
-          Тихая зона
-        </div>
+      <div class="about-stat reveal">
+        <span class="stat-num">2 нед.</span>
+        <div class="stat-label">Свежая обжарка</div>
       </div>
-      <blockquote class="about-quote reveal">
-        «Наши бариста — настоящие кофейные гики. Они с радостью подберут напиток под ваше настроение.»
-      </blockquote>
-      <div class="counters">
-        <div class="counter-item reveal">
-          <span class="counter-num" data-target="2022" data-type="year">2022</span>
-          <div class="counter-label">Открылись в Москве</div>
-        </div>
-        <div class="counter-item reveal">
-          <span class="counter-num" data-target="2" data-suffix=" нед.">2 нед.</span>
-          <div class="counter-label">Свежая обжарка</div>
-        </div>
-        <div class="counter-item reveal">
-          <span class="counter-num">Каждый<br>день</span>
-          <div class="counter-label">Выпечка из пекарни</div>
-        </div>
+      <div class="about-stat reveal">
+        <span class="stat-num">Ежедневно</span>
+        <div class="stat-label">Выпечка из пекарни</div>
       </div>
     </div>
   </div>
